@@ -1,0 +1,32 @@
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.box {
+  line-height:200px;
+  font-size:20px;
+  background:
+  linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5))0 100%/100% 50px  no-repeat,
+  url(../../../assets/icon/panqueques.jpg) ;
+}
+
+.avatar {
+  background-image: url('../../../assets/icon/Jorge.png');
+  background-size: cover;
+}
+
+ion-toolbar{
+  --background:#745e09 !important;
+}
+
+.fondo1{
+   background-color: rgba(0, 0, 0, 0);
+}

@@ -1,9 +1,96 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>receta</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button ion-button icon-only>
+        <ion-icon name="heart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <div class="container">
+    <div class="box" style="color: rgba(0, 0, 0, 0);">
+      p
+    </div>
+    <div class="bottom-left" style="font-size:19px">
+      Panqueques con Manjar
+    </div>
+  </div>
+
+  <center>
+    <h2 style="margin-top: 20px;">Descripción</h2>
+    <p style="width: 85%">Sorprende a todos con unos Panqueques con Manjar bajos en calorías. Prepararlos es muy fácil y en solo 30 minutos
+      podrás disfrutarlos junto a 12 personas.</p>
+
+    <ion-row style="margin-top: 20px;">
+      <ion-col>
+        <p style="color: rgb(14, 163, 250);">6 Ingredientes</p>
+      </ion-col>
+      <ion-col>
+        <p style="color: rgb(0, 228, 19);">Facil</p>
+      </ion-col>
+      <ion-col>
+        <p style="color: rgb(0, 228, 19);">15 Minutos</p>
+      </ion-col>
+    </ion-row>
+  </center>
+
+  <mat-accordion>
+    <mat-expansion-panel class="fondo1">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Ingredientes:
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>
+        1 1/2 Taza de leche semidescremada <br>
+        2 Huevos <br>
+        1 Cucharada de aceite <br>
+        1 1/2 Taza de harina cernida <br>
+        12 Cucharadas de manjar</p>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="fondo1" style="margin-bottom: 20px;">
+      <mat-expansion-panel-header>
+        
+        <mat-panel-title>
+          Preparación:
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>1) Coloca todos los ingredientes en una juguera, excepto el manjar, vertiendo primero los liquidos como la
+        leche,
+        huevos y aceite y al final los secos. Procesa a velocidad media durante unos segundos hasta conseguir un
+        batido
+        homogéneo.</p>
+      <p>2) Luego calienta una sartén de teflón o antiadherente de diametro mediano, vierte ¾ de un cucharón y
+        distribuye por toda la sartén con movimientos circulares e inclinados con el mango de la sartén.
+        Cocina durante unos segundos hasta dorar sus bordes y voltea. Cocina unos segundos mas y repite el
+        procedimiento
+        hasta acabar la mezcla.</p>
+      <p>3) Una vez listos, rellénalos uno a uno con una cucharada de manjar y enróllalos sobre sí mismos,
+        espolvorea azúcar flor y sírvelos de inmediato fríos o calientes como más te guste.</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-card class="example-card fondo1">
+    <mat-card-header>
+      <div mat-card-avatar class="avatar"></div>
+      <mat-card-title>{{user}}</mat-card-title>
+    </mat-card-header>
+      <mat-card-content>
+        <ion-item style="margin-top: 20px;">
+          <ion-textarea placeholder="Deja un comentario"></ion-textarea>
+        </ion-item>
+        <ion-button expand="full" color="primary">Enviar Comentario</ion-button>
+      </mat-card-content>
+      <mat-card-actions>
+      </mat-card-actions>
+  </mat-card>
+  
 
 </ion-content>

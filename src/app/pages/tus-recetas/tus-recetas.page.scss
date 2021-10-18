@@ -1,0 +1,21 @@
+.imagen{
+    width:90%;
+    border-radius: 12px;
+    text-align:center;
+    margin:10px
+}
+
+ion-content.fondo{
+    --background:
+    linear-gradient(rgba(0, 0, 0, 1),rgba(0, 0, 0, 0.8))0 100%/100%  no-repeat,
+    url(../../../assets/icon/fondo.jpg)
+  }
+
+  .fondo1{
+    background-color: rgba(0, 0, 0, 0.514);
+  }
+
+  .fondo2{
+    background-color: rgba(5, 19, 80, 0.514);
+    margin-bottom:10px !important;
+  }

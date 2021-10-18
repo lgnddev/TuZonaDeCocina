@@ -1,9 +1,88 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>tusRecetas</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title style="text-align: center">Tus Recetas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<ion-content class="fondo">
 
-<ion-content>
+  <div>
+
+
+    <div [routerLink]="['/reg-recetas']" class="fondo2">
+      <center>
+      <ion-row>
+        <ion-col size="10">
+          <h3>Panqueques con Manjar</h3>
+        </ion-col>
+        <ion-col size="2">
+          <h2>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </h2>
+        </ion-col>
+      </ion-row>
+    </center>
+    </div>
+
+    <div [routerLink]="['/reg-recetas']" class="fondo2">
+      <center>
+      <ion-row>
+        <ion-col size="10">
+          <h3>Panqueques con Manjar</h3>
+        </ion-col>
+        <ion-col size="2">
+          <h2>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </h2>
+        </ion-col>
+      </ion-row>
+    </center>
+    </div>
+
+    <div [routerLink]="['/reg-recetas']" class="fondo2">
+      <center>
+      <ion-row>
+        <ion-col size="10">
+          <h3>Panqueques con Manjar</h3>
+        </ion-col>
+        <ion-col size="2">
+          <h2>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </h2>
+        </ion-col>
+      </ion-row>
+    </center>
+    </div>
+
+    <div [routerLink]="['/reg-recetas']" class="fondo2">
+      <center>
+      <ion-row>
+        <ion-col size="10">
+          <h3>Panqueques con Manjar</h3>
+        </ion-col>
+        <ion-col size="2">
+          <h2>
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </h2>
+        </ion-col>
+      </ion-row>
+    </center>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button [routerLink]="['/nueva-receta']">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+  </div>
 
 </ion-content>

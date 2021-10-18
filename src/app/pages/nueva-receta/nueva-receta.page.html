@@ -1,9 +1,93 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>nuevaReceta</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title style="text-align: center">Creador de Receta</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" class="fondo">
+  <div class="fondo1" >
 
+    <ion-item class="fondo1">
+      <ion-label>Nombre:</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <mat-tab-group mat-align-tabs="center" class="fondo1">
+
+      <mat-tab label="1">
+        <ng-template mat-tab-label>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">
+            <ion-icon name="clipboard-outline"></ion-icon>
+          </mat-icon>
+        </ng-template>
+
+        <ion-item>
+          <ion-label position="floating">Tipo de Receta:</ion-label>
+          <ion-select>
+            <ion-select-option value="1">Desayuno</ion-select-option>
+            <ion-select-option value="2">Ensalada</ion-select-option>
+            <ion-select-option value="3">Plato de Fondo</ion-select-option>
+            <ion-select-option value="4">Postre</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Dificultad:</ion-label>
+          <ion-select>
+            <ion-select-option value="1">Desayuno</ion-select-option>
+            <ion-select-option value="2">Ensalada</ion-select-option>
+            <ion-select-option value="3">Plato de Fondo</ion-select-option>
+            <ion-select-option value="4">Postre</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item style="text-align:center;">
+          <ion-button color="warning">Limpiar</ion-button>
+          <ion-button color="success">Registrar</ion-button>
+        </ion-item>
+      </mat-tab>
+
+      <mat-tab label="2">
+        <ng-template mat-tab-label>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">
+            <ion-icon name="image-outline"></ion-icon>
+          </mat-icon>
+        </ng-template>
+        <ion-item class="barras">
+          <ion-label position="stacked">Imagen:</ion-label>
+          <ion-input type="file"></ion-input>
+        </ion-item>
+      </mat-tab>
+
+      <mat-tab label="3">
+        <ng-template mat-tab-label>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">
+            <ion-icon name="restaurant-outline"></ion-icon>
+          </mat-icon>
+        </ng-template>
+
+        <ion-item class="barras">
+          <ion-label position="floating">Ingredientes:</ion-label>
+          <ion-textarea rows="6"></ion-textarea>
+        </ion-item>
+      </mat-tab>
+
+      <mat-tab label="4">
+        <ng-template mat-tab-label>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">
+            <ion-icon name="book-outline"></ion-icon>
+          </mat-icon>
+        </ng-template>
+
+        <ion-item>
+          <ion-label position="floating">Preparación:</ion-label>
+          <ion-textarea rows="6"></ion-textarea>
+        </ion-item>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div class="fondo1" style="height:346px;"></div>
 </ion-content>

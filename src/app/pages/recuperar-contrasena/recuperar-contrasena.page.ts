@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-recuperar-contrasena',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecuperarContrasenaPage implements OnInit {
 
-  constructor() { }
+  constructor(public alertCtrl: AlertController) { }
 
   ngOnInit() {
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      message: 'Se ha enviado un correo de reestablecimiento de contraseña al correo proporcionado',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }
