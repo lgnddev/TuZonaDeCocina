@@ -1,9 +1,62 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>inscripcion</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <center>
+    <div class="fondo1" style="border-radius: 15px; margin-top: 5px;">
 
+      <h1 class="ion-text-center ion-margin-vertical ion-padding-top" style="margin: 16px 0; padding-top: 32px">Registro</h1>
+
+      <form style="margin-top: 15px;">
+        <ion-item class="barras">
+          <ion-label position="floating">Nombre:</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+
+        <ion-item class="barras">
+          <ion-label position="floating">Apellidos:</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+
+        <ion-item class="barras">
+          <ion-label position="floating">Fecha de Nacimiento:</ion-label>
+          <ion-datetime displayFormat="DD / MMMM / YYYY"></ion-datetime>
+        </ion-item>
+
+        <ion-item class="barras">
+          <ion-label position="floating">Nacionalidad:</ion-label>
+          <ion-select>
+            <ion-select-option value="1">Chileno/a</ion-select-option>
+            <ion-select-option value="2">Argentino/a</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="barras">
+          <ion-label position="floating">Sexo:</ion-label>
+          <ion-select>
+            <ion-select-option value="1">Masculino</ion-select-option>
+            <ion-select-option value="2">Femenino</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="barras">
+          <ion-label position="floating">Correo:</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="barras">
+          <ion-label position="floating">Contraseña:</ion-label>
+          <ion-input type="password"></ion-input>
+        </ion-item>
+
+        <ion-button class="boton" [routerLink]="['/login']" type="submit">Registrar</ion-button>
+      </form>
+
+    </div>
+  </center>
 </ion-content>
