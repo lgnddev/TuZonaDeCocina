@@ -1,21 +1,36 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="cabecera">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
+    <ion-title class="titulo">Inicio</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar style="--background:rgb(114, 107, 86);">
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment scrollable="true"  value="desayuno" (ionChange)="segmentChanged($event)">
+      <ion-segment-button style="border: 3px solid;" value="desayuno">
+        <ion-icon name="nutrition-outline"></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button style="border: 2px solid;" value="ensalada">
+        <ion-icon name="leaf-outline"></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button style="border: 2px solid;" value="almuerzo">
+        <ion-icon name="fast-food-outline"></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button style="border: 2px solid;" value="postre">
+        <ion-icon name="ice-cream-outline"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
 </ion-content>

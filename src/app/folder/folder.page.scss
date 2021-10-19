@@ -26,3 +26,15 @@ ion-menu-button {
 #container a {
   text-decoration: none;
 }
+
+.cabecera{
+  --background:#ecc00fd0 !important;
+}
+
+.titulo{
+  margin-left:25%;
+  color:white;
+}
+ion-segment{
+  --background:rgb(114, 107, 86);
+}

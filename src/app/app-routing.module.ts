@@ -10,7 +10,8 @@ const routes: Routes = [
   {
     path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },  {
+  },
+  {
     path: 'nueva-receta',
     loadChildren: () => import('./pages/nueva-receta/nueva-receta.module').then( m => m.NuevaRecetaPageModule)
   },

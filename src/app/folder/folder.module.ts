@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { FolderPageRoutingModule } from './folder-routing.module';
 
 import { FolderPage } from './folder.page';
+import { DesayunoComponent } from '../componentes/desayuno/desayuno.component';
+import { EnsaladaComponent } from '../componentes/ensalada/ensalada.component';
+import { AlmuerzoComponent } from '../componentes/almuerzo/almuerzo.component';
+import { PostreComponent } from '../componentes/postre/postre.component';
 
 @NgModule({
   imports: [
@@ -15,6 +19,6 @@ import { FolderPage } from './folder.page';
     IonicModule,
     FolderPageRoutingModule
   ],
-  declarations: [FolderPage]
+  declarations: [FolderPage, DesayunoComponent, EnsaladaComponent, AlmuerzoComponent, PostreComponent]
 })
 export class FolderPageModule {}
