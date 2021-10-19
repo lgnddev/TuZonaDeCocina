@@ -15,30 +15,32 @@
 <ion-content>
 
   <div class="container">
-    <div class="box" style="color: rgba(0, 0, 0, 0);">
+    <div class="box">
       p
     </div>
-    <div class="bottom-left" style="font-size:19px">
-      Panqueques con Manjar
+    <div class="bottom-left">
+      <h2>Panqueques con Manjar</h2>
     </div>
   </div>
 
   <center>
-    <h2 style="margin-top: 20px;">Descripción</h2>
-    <p style="width: 85%">Sorprende a todos con unos Panqueques con Manjar bajos en calorías. Prepararlos es muy fácil y en solo 30 minutos
-      podrás disfrutarlos junto a 12 personas.</p>
+    <div class="descrip">
+      <h2 style="margin-top: 20px;">Descripción</h2>
+      <p style="width: 85%">Sorprende a todos con unos Panqueques con Manjar bajos en calorías. Prepararlos es muy fácil
+        y
+        en solo 30 minutos
+        podrás disfrutarlos junto a 12 personas.</p>
 
-    <ion-row style="margin-top: 20px;">
-      <ion-col>
-        <p style="color: rgb(14, 163, 250);">6 Ingredientes</p>
-      </ion-col>
-      <ion-col>
-        <p style="color: rgb(0, 228, 19);">Facil</p>
-      </ion-col>
-      <ion-col>
-        <p style="color: rgb(0, 228, 19);">15 Minutos</p>
-      </ion-col>
-    </ion-row>
+      <ion-row style="margin-top: 20px;">
+        <ion-col size=6>
+          <p class="car">Facil</p>
+        </ion-col>
+        <ion-col size=6>
+          <p class="car">15 Minutos</p>
+        </ion-col>
+      </ion-row>
+
+    </div>
   </center>
 
   <mat-accordion>
@@ -57,7 +59,7 @@
     </mat-expansion-panel>
     <mat-expansion-panel class="fondo1" style="margin-bottom: 20px;">
       <mat-expansion-panel-header>
-        
+
         <mat-panel-title>
           Preparación:
         </mat-panel-title>
@@ -77,20 +79,20 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <mat-card class="example-card fondo1">
+  <mat-card class="example-card fondo2">
     <mat-card-header>
       <div mat-card-avatar class="avatar"></div>
       <mat-card-title>{{user}}</mat-card-title>
     </mat-card-header>
-      <mat-card-content>
-        <ion-item style="margin-top: 20px;">
-          <ion-textarea placeholder="Deja un comentario"></ion-textarea>
-        </ion-item>
-        <ion-button expand="full" color="primary">Enviar Comentario</ion-button>
-      </mat-card-content>
-      <mat-card-actions>
-      </mat-card-actions>
+    <mat-card-content>
+      <ion-item style="margin-top: 20px;">
+        <ion-textarea placeholder="Deja un comentario"></ion-textarea>
+      </ion-item>
+      <ion-button expand="full" color="primary">Enviar Comentario</ion-button>
+    </mat-card-content>
+    <mat-card-actions>
+    </mat-card-actions>
   </mat-card>
-  
+
 
 </ion-content>
