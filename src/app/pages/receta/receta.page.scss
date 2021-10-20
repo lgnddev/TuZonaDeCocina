@@ -29,12 +29,11 @@ ion-toolbar{
 }
 
 .fondo1{
-   background-color: rgb(114, 107, 86);
+  background-color: rgb(0, 0, 0);
 }
 
 .fondo2{
-  background-color: rgba(0, 0, 0, 0);
-  border: 2px solid;
+  --background: rgb(0, 0, 0) !important;
 }
 
 .car{
@@ -42,5 +41,27 @@ ion-toolbar{
 }
 
 .descrip{
-  border: 10px solid rgb(114, 107, 86);
+  border-radius:20px; 
+  margin-top: 25px; 
+  margin-bottom:25px; 
+  width:88%; 
+  background:black;;
+}
+
+p{
+  margin:0 auto; 
+  text-align: center; 
+  width:85%;
+  font-family:Satisfy;
+  font-size:17px;
+}
+
+@font-face{
+  font-family: 'Satisfy';
+  src:url('/src/assets/fonts/Satisfy-Regular.ttf');
+}
+
+.boton{
+  --background: rgb(195, 144, 50);
+
 }
