@@ -1,0 +1,18 @@
+ion-content{
+    --background:rgb(114, 107, 86);
+    --ion-font-family: Satisfy !important;
+}
+
+@font-face{
+    font-family: 'Satisfy';
+    src:url('/src/assets/fonts/Satisfy-Regular.ttf');
+}
+
+.star{
+    color:rgb(199, 151, 62);
+}
+
+.boton{
+    --background: rgb(195, 144, 50);
+
+}
