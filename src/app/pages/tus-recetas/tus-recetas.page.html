@@ -12,77 +12,25 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="fondo">
+<ion-content class="">
 
   <div>
 
+    <ion-list>
 
-    <div [routerLink]="['/reg-recetas']" class="fondo2">
-      <center>
-      <ion-row>
-        <ion-col size="10">
-          <h3>Panqueques con Manjar</h3>
-        </ion-col>
-        <ion-col size="2">
-          <h2>
-            <ion-icon name="arrow-forward-outline"></ion-icon>
-          </h2>
-        </ion-col>
-      </ion-row>
-    </center>
-    </div>
+      <ion-item *ngFor="let i of lista">
+        <ion-icon slot="end" name="ellipsis-vertical-outline" (click)="presentActionSheet(i.nombre)"></ion-icon>
+        <ion-label [routerLink]="['/receta']">{{i.nombre}}</ion-label>
+      </ion-item>
 
-    <div [routerLink]="['/reg-recetas']" class="fondo2">
-      <center>
-      <ion-row>
-        <ion-col size="10">
-          <h3>Panqueques con Manjar</h3>
-        </ion-col>
-        <ion-col size="2">
-          <h2>
-            <ion-icon name="arrow-forward-outline"></ion-icon>
-          </h2>
-        </ion-col>
-      </ion-row>
-    </center>
-    </div>
-
-    <div [routerLink]="['/reg-recetas']" class="fondo2">
-      <center>
-      <ion-row>
-        <ion-col size="10">
-          <h3>Panqueques con Manjar</h3>
-        </ion-col>
-        <ion-col size="2">
-          <h2>
-            <ion-icon name="arrow-forward-outline"></ion-icon>
-          </h2>
-        </ion-col>
-      </ion-row>
-    </center>
-    </div>
-
-    <div [routerLink]="['/reg-recetas']" class="fondo2">
-      <center>
-      <ion-row>
-        <ion-col size="10">
-          <h3>Panqueques con Manjar</h3>
-        </ion-col>
-        <ion-col size="2">
-          <h2>
-            <ion-icon name="arrow-forward-outline"></ion-icon>
-          </h2>
-        </ion-col>
-      </ion-row>
-    </center>
-    </div>
-
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button [routerLink]="['/nueva-receta']">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+    </ion-list>
 
   </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+    <ion-fab-button [routerLink]="['/nueva-receta']" color="dark">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

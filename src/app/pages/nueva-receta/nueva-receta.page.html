@@ -4,90 +4,75 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title style="text-align: center">Creador de Receta</ion-title>
+    <ion-title>Creador de Receta</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="fondo">
-  <div class="fondo1" >
+<ion-content [fullscreen]="true" class="">
 
-    <ion-item class="fondo1">
-      <ion-label>Nombre:</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
+  <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)">
 
-    <mat-tab-group mat-align-tabs="center" class="fondo1">
+    <mat-step [stepControl]="secondFormGroup" label="">
+      <form [formGroup]="secondFormGroup">
 
-      <mat-tab label="1">
-        <ng-template mat-tab-label>
-          <mat-icon aria-hidden="false" aria-label="Example home icon">
-            <ion-icon name="clipboard-outline"></ion-icon>
-          </mat-icon>
-        </ng-template>
+      </form>
+    </mat-step>
 
-        <ion-item>
-          <ion-label position="floating">Tipo de Receta:</ion-label>
-          <ion-select>
-            <ion-select-option value="1">Desayuno</ion-select-option>
-            <ion-select-option value="2">Ensalada</ion-select-option>
-            <ion-select-option value="3">Plato de Fondo</ion-select-option>
-            <ion-select-option value="4">Postre</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Dificultad:</ion-label>
-          <ion-select>
-            <ion-select-option value="1">Desayuno</ion-select-option>
-            <ion-select-option value="2">Ensalada</ion-select-option>
-            <ion-select-option value="3">Plato de Fondo</ion-select-option>
-            <ion-select-option value="4">Postre</ion-select-option>
-          </ion-select>
-        </ion-item>
+    <mat-step [stepControl]="secondFormGroup" label="">
+      <ion-input [(ngModel)]="ingrediente"> Ingrediente </ion-input>
+      <ion-input [(ngModel)]="cantidad"> Cantidad </ion-input>
+      <ion-button (click)="agregar()"></ion-button>
+      <form [formGroup]="secondFormGroup">
+        
+        <table>
+          <tr>
+            <th *ngFor = "let column of headers">
+              {{column}}
+            </th>
+          </tr>
+          <tr *ngFor = "let row of rows">
+            <th *ngFor = "let column of headers">
+              {{row[column]}}
+            </th>
+            <th>
+              <button (click)="deleteRow(row)">Eliminar</button>
+            </th>
+          </tr>
+        </table>
 
-        <ion-item style="text-align:center;">
-          <ion-button color="warning">Limpiar</ion-button>
-          <ion-button color="success">Registrar</ion-button>
-        </ion-item>
-      </mat-tab>
+      </form>
+    </mat-step>
 
-      <mat-tab label="2">
-        <ng-template mat-tab-label>
-          <mat-icon aria-hidden="false" aria-label="Example home icon">
-            <ion-icon name="image-outline"></ion-icon>
-          </mat-icon>
-        </ng-template>
-        <ion-item class="barras">
-          <ion-label position="stacked">Imagen:</ion-label>
-          <ion-input type="file"></ion-input>
-        </ion-item>
-      </mat-tab>
+    <mat-step [stepControl]="secondFormGroup" label="">
+      <form [formGroup]="secondFormGroup">
 
-      <mat-tab label="3">
-        <ng-template mat-tab-label>
-          <mat-icon aria-hidden="false" aria-label="Example home icon">
-            <ion-icon name="restaurant-outline"></ion-icon>
-          </mat-icon>
-        </ng-template>
+      </form>
+    </mat-step>
 
-        <ion-item class="barras">
-          <ion-label position="floating">Ingredientes:</ion-label>
-          <ion-textarea rows="6"></ion-textarea>
-        </ion-item>
-      </mat-tab>
+    <mat-step [stepControl]="secondFormGroup" label="">
+      <form [formGroup]="secondFormGroup">
 
-      <mat-tab label="4">
-        <ng-template mat-tab-label>
-          <mat-icon aria-hidden="false" aria-label="Example home icon">
-            <ion-icon name="book-outline"></ion-icon>
-          </mat-icon>
-        </ng-template>
+      </form>
+    </mat-step>
 
-        <ion-item>
-          <ion-label position="floating">Preparación:</ion-label>
-          <ion-textarea rows="6"></ion-textarea>
-        </ion-item>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
-  <div class="fondo1" style="height:346px;"></div>
+  </mat-stepper>
+
+
+
+
+
+
 </ion-content>
+
+<ion-footer class="ion-no-border" slot="bottom">
+  <ion-toolbar>
+    <center>
+      <button *ngIf="startOfForm" mat-button (click)="Anterior()">Cancelar</button>
+      <button *ngIf="!startOfForm" mat-button (click)="Anterior()">Anterior</button>
+
+      <button *ngIf="!endOfForm" mat-button (click)="Siguente()">Siguente</button>
+      <button *ngIf="endOfForm" mat-button (click)="Siguente()">Finalizar</button>
+
+    </center>
+  </ion-toolbar>
+</ion-footer>
