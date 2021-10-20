@@ -6,10 +6,18 @@
     <ion-title class="titulo">Inicio</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar style="--background:rgb(114, 107, 86);">
-    <ion-searchbar style="--background:black;"></ion-searchbar>
+  <ion-toolbar style="--background:rgb(165, 154, 121);">
+    <ion-searchbar style="--background:rgb(200, 196, 196);"></ion-searchbar>
   </ion-toolbar>
 
+  
+</ion-header>
+
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>
+
+<ion-footer>
   <ion-toolbar>
     <ion-segment scrollable="true"  value="desayuno" (ionChange)="segmentChanged($event)">
       <ion-segment-button style="border: 2px solid;" value="desayuno">
@@ -29,8 +37,4 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-router-outlet></ion-router-outlet>
-</ion-content>
+</ion-footer>
