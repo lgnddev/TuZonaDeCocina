@@ -12,45 +12,55 @@ import { ToastController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
   @ViewChild("title", { read: ElementRef, static: true }) title: ElementRef;
-  user: String;
+
+  login: any = {
+    Usuario: "",
+    Contrasena: ""
+  };
+
+  user = "Jorge";
+  pass = 1234;
 
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'indeterminate';
   public load: Boolean = false;
-  field: string = "";
+  
 
   constructor(private router: Router, private animationCtrl: AnimationController, public toastController: ToastController) { }
 
   ngOnInit() {
     const animation = this.animationCtrl
-    .create()
-    .addElement(this.title.nativeElement)
-    .duration(1500)
-    .fromTo("opacity", 0, 1);
+      .create()
+      .addElement(this.title.nativeElement)
+      .duration(1500)
+      .fromTo("opacity", 0, 1);
     animation.play();
   }
-
   
-  
-  sendUser() {
-    if (this.user!=null) {
-      let navigationExtras: NavigationExtras = {
-        state: {
-          user: this.user
+  field: string = "";
+  //this.auth.login(this.login.Usuario, this.login.Password);
+  ingresar() {
+    if (this.validateModel(this.login)) {
+      if (this.user == this.login.Usuario && this.pass == this.login.Contrasena) {
+        this.presentToast("Bienvenido " + this.login.Usuario);
+        let navigationExtras: NavigationExtras = {
+          state: {
+            user: this.login.user
+          }
         }
+        this.load = true;
+        setTimeout(() => {
+          this.load = false;
+          this.router.navigate(['/folder/Inbox'], navigationExtras);
+        }, 2000)
+        this.login.user = null;
       }
-      this.load = true;
-      setTimeout(() => {
-        this.load = false;
-        this.router.navigate(['/folder/Inbox'], navigationExtras);
-        this.presentToast('Inicio de Sesion Exitoso');
-      }, 2000)
-      this.user=null;
-
-
+      else {
+        this.presentToast("Usuario y/o contraseña incorrecta");
+      }
     }
     else {
-      this.presentToast('Usuario y/o Contraseña Incorrecto');
+      this.presentToast("Falta el campo " + this.field);
     }
   }
 
@@ -64,5 +74,15 @@ export class LoginPage implements OnInit {
       }
     );
     toast.present();
+  }
+
+  validateModel(model: any) {
+    for (var [key, value] of Object.entries(model)) {
+      if (value == "") {
+        this.field = key;
+        return false;
+      }
+    }
+    return true;
   }
 }
