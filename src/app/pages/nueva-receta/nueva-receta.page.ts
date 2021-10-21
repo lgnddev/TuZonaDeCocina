@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./nueva-receta.page.scss'],
 })
 export class NuevaRecetaPage implements OnInit {
-
+  
 
   @ViewChild('stepper') stepper;
   isLinear = false;
@@ -17,7 +17,7 @@ export class NuevaRecetaPage implements OnInit {
   secondFormGroup: FormGroup;
   endOfForm: boolean = false;
   startOfForm: boolean = true;
-  headers = ["#", "Ingrediente", "Cantidad"];
+  headers = ["Ingrediente", "Cantidad"];
   rows = []
   ingrediente: string;
   cantidad: string;
@@ -45,7 +45,6 @@ export class NuevaRecetaPage implements OnInit {
 
   agregar(){
     this.rows.push({
-      "#" : "1",
       "Ingrediente" : this.ingrediente,
       "Cantidad" : this.cantidad
     })

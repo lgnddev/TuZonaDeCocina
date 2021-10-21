@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatSliderModule } from '@angular/material/slider';
 
 
 
@@ -19,6 +21,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule,MatTabsModule, MatStepperModule,MatButtonModule, MatFormFieldModule , ReactiveFormsModule, FormsModule, MatInputModule],
+  exports: [RouterModule,MatTabsModule, MatStepperModule,MatButtonModule, MatFormFieldModule , ReactiveFormsModule, FormsModule, MatInputModule, MatTableModule, MatSliderModule],
 })
 export class NuevaRecetaPageRoutingModule {}

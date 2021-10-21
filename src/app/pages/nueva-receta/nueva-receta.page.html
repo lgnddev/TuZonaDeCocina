@@ -10,47 +10,106 @@
 
 <ion-content [fullscreen]="true" class="">
 
-  <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)">
+  <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)" class="fondo1">
 
     <mat-step [stepControl]="secondFormGroup" label="">
       <form [formGroup]="secondFormGroup">
+
+        <center>
+          <h2>Presentacion</h2>
+        </center>
+
+        <ion-item class="ion-margin-bottom">
+          <ion-input placeholder="Titulo de la receta"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-textarea placeholder="Descripcion" rows=7></ion-textarea>
+        </ion-item>
 
       </form>
     </mat-step>
 
     <mat-step [stepControl]="secondFormGroup" label="">
-      <ion-input [(ngModel)]="ingrediente"> Ingrediente </ion-input>
-      <ion-input [(ngModel)]="cantidad"> Cantidad </ion-input>
-      <ion-button (click)="agregar()"></ion-button>
+
+      <center>
+        <h2>Ingredientes</h2>
+      </center>
+      <ion-row class="ion-margin-bottom">
+        <ion-col size="6">
+          <ion-item>
+            <ion-input [(ngModel)]="ingrediente"></ion-input>
+          </ion-item>
+        </ion-col >
+        <ion-col size="3">
+          <ion-item>
+            <ion-input [(ngModel)]="cantidad"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="add-circle-outline" (click)="agregar()"></ion-icon>
+        </ion-col>
+      </ion-row >
+
+      <hr />
+
       <form [formGroup]="secondFormGroup">
-        
-        <table>
-          <tr>
-            <th *ngFor = "let column of headers">
-              {{column}}
-            </th>
-          </tr>
-          <tr *ngFor = "let row of rows">
-            <th *ngFor = "let column of headers">
+
+        <table style="border-collapse:separate; border-spacing:0px 20px;">
+          <thead>
+            <tr>
+              <th style="width: 20%">
+                Ingrediente
+              </th>
+              <th style="width: 10%">
+                Cantidad
+              </th>
+              <th style="width: 10%">
+                Acciones
+              </th>
+              
+            </tr>
+          </thead>
+          <tr *ngFor="let row of rows">
+            <th *ngFor="let column of headers">
               {{row[column]}}
             </th>
             <th>
-              <button (click)="deleteRow(row)">Eliminar</button>
+              <ion-icon name="trash" (click)="deleteRow(row)" style="font-size: 25px"></ion-icon>
             </th>
           </tr>
         </table>
 
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="secondFormGroup" label="">
-      <form [formGroup]="secondFormGroup">
 
       </form>
     </mat-step>
 
     <mat-step [stepControl]="secondFormGroup" label="">
       <form [formGroup]="secondFormGroup">
+        <center>
+          <h2>Preparacion</h2>
+        </center>
+
+        <ion-item>
+          <ion-textarea placeholder="Preparacion" rows=15></ion-textarea>
+        </ion-item>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="">
+      <form [formGroup]="secondFormGroup">
+        <center>
+          <h2>Otros</h2>
+        </center>
+
+        <mat-slider min="1" max="100"></mat-slider>
+
+        
+        <ion-item>
+          <ion-label>Imagen</ion-label>
+          <ion-input type="file"></ion-input>
+        </ion-item>
+
+        
 
       </form>
     </mat-step>

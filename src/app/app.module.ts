@@ -19,12 +19,14 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, MatProgressSpinnerModule, MatTabsModule, MatButtonModule, MatIconModule, MatCardModule, MatExpansionModule,
-    MatStepperModule, MatFormFieldModule, ReactiveFormsModule, FormsModule, MatInputModule],
+    MatStepperModule, MatFormFieldModule, ReactiveFormsModule, FormsModule, MatInputModule, MatTableModule, MatSliderModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
