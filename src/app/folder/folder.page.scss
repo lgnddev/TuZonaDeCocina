@@ -36,5 +36,11 @@ ion-menu-button {
   color:white;
 }
 ion-segment{
-  --background:rgb(158, 148, 118);
+  --background:rgb(165, 154, 121);
+}
+
+ion-searchbar{
+  --background:rgb(251, 249, 249); 
+  color:black;
+  --border-radius: 50px;
 }
