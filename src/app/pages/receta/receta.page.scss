@@ -28,6 +28,10 @@ ion-toolbar{
   --background:#ecc00fd0 !important;
 }
 
+ion-content{
+  --background:rgb(136, 126, 98);
+}
+
 .fondo1{
   background-color: rgb(0, 0, 0);
 }
@@ -37,7 +41,7 @@ ion-toolbar{
 }
 
 .car{
-  color: rgb(0, 228, 19);
+  color: rgb(0, 224, 19);
 }
 
 .descrip{

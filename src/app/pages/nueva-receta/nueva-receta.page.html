@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="cabecera">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -8,11 +8,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="">
+<ion-content [fullscreen]="true">
 
   <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)" class="fondo1">
 
-    <mat-step [stepControl]="secondFormGroup" label="">
+    <mat-step [stepControl]="secondFormGroup" label="" class="fondo3">
       <form [formGroup]="secondFormGroup">
 
         <center>
@@ -124,7 +124,7 @@
 </ion-content>
 
 <ion-footer class="ion-no-border" slot="bottom">
-  <ion-toolbar>
+  <ion-toolbar >
     <center>
       <button *ngIf="startOfForm" mat-button (click)="Anterior()">Cancelar</button>
       <button *ngIf="!startOfForm" mat-button (click)="Anterior()">Anterior</button>

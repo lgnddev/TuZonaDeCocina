@@ -12,10 +12,25 @@ ion-content.fondo{
   }
 
   .fondo1{
-    background-color: rgba(0, 0, 0, 0.514);
+    --background: rgb(0, 0, 0);
   }
 
   .fondo2{
     background-color: rgba(5, 19, 80, 0.514);
     margin-bottom:10px !important;
   }
+
+  .cabecera{
+    --background:#ecc00fd0 !important;
+  }
+
+  .boton{
+    --background:rgb(195, 144, 50);
+  }
+
+  .lista{
+    --background: rgb(136, 126, 98);
+    border:2px solid rgb(0, 0, 0);
+  }
+  
+  
