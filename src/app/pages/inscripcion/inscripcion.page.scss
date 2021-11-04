@@ -5,10 +5,8 @@ ion-content{
 .barras{
    color:rgb(255, 255, 255);
     --background:rgba(0, 0, 0, 0) !important;
-
   }
   
-
 ion-button{
     --background:rgba(255, 255, 255, 0.712);
     margin-top: 30px;
@@ -25,4 +23,12 @@ ion-button{
 
 .boton{
     --background:rgb(195, 144, 50);
+}
+
+.titulo{
+    color:rgb(255, 255, 255);
+  }
+
+.cabecera{
+    --background:rgba(0, 0, 0, 0.219) !important;
 }

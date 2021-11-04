@@ -2,10 +2,10 @@
   <div #title class="fondo1">
 
     <center>
-      <h1 class="ion-text-center ion-margin-vertical ion-padding-top" style="margin: 32px 0; padding-top: 32px">Tu zona de comida</h1>
+      <h1 class="ion-text-center ion-margin-vertical ion-padding-top titulo" style="margin: 32px 0; padding-top: 32px">Tu Zona de Comida</h1>
       <img src="../../../assets/icon/logo.png" style="width: 25%">
       <ion-item class="barras">
-        <ion-label position="floating">Usuario</ion-label>
+        <ion-label position="floating">Correo</ion-label>
         <ion-input type="text" [(ngModel)]="usuarioIngresado.Usuario" required></ion-input>
       </ion-item>
 
@@ -28,8 +28,8 @@
         <ion-col size="12" class="ion-text-center">
           <p>Aun no te has registrado?</p>
           <ion-row>
-            <ion-col><p  [routerLink]="['/inscripcion']"> Registrarse </p></ion-col>
-            <ion-col><p  [routerLink]="['/recuperar-contrasena']">Olvidaste tu contraseña?</p></ion-col>
+            <ion-col class="titulo"><p  [routerLink]="['/inscripcion']"> Registrarse </p></ion-col>
+            <ion-col class="titulo"><p  [routerLink]="['/recuperar-contrasena']">Olvidaste tu contraseña?</p></ion-col>
           </ion-row>
           <ion-row>
             <ion-col><ion-button class="boton1" href="" [routerLink]="['/inscripcion']"> <ion-icon name="person-add-outline"></ion-icon>  </ion-button> <br></ion-col>

@@ -8,24 +8,32 @@ ion-content.fondo{
   }
   
   .barras{
-    --border-radius:30px !important;
+    color:rgb(255, 255, 255);
+    border:rgb(104, 101, 101)2px solid;
+    border-radius: 30px !important;
     margin-bottom:10px !important;
     --background:#00000094 !important;
-    width:95%;
+    width:90%;
   }
   
   .boton{
-  --background:rgb(195, 144, 50);
+    --background:rgb(195, 144, 50);
+    width:80%;
+    margin:0 auto;
   }
   
   .boton1{
     --background:#000000b6;
+    border:rgb(104, 101, 101)2px solid;
+    border-radius: 10px !important;
     }
   
   .fondo1{
     background-color: rgba(0, 0, 0, 0.712);
   }
 
-  label{
-    color: rgba(255, 255, 255, 0.712);;
+  .titulo{
+    color:rgb(255, 255, 255);
   }
+
+
