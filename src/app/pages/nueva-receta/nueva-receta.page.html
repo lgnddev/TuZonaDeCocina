@@ -20,10 +20,10 @@
         </center>
 
         <ion-item class="ion-margin-bottom">
-          <ion-input placeholder="Titulo de la receta"></ion-input>
+          <ion-input placeholder="Titulo de la receta" [(ngModel)]=nreceta.nom_receta></ion-input>
         </ion-item>
         <ion-item>
-          <ion-textarea placeholder="Descripcion" rows=7></ion-textarea>
+          <ion-textarea placeholder="Descripcion"  [(ngModel)]=nreceta.descripcion rows=7></ion-textarea>
         </ion-item>
 
       </form>
@@ -90,7 +90,7 @@
         </center>
 
         <ion-item>
-          <ion-textarea placeholder="Preparacion" rows=15></ion-textarea>
+          <ion-textarea placeholder="Preparacion" [(ngModel)]=nreceta.preparacion rows=15></ion-textarea>
         </ion-item>
       </form>
     </mat-step>
@@ -109,17 +109,10 @@
           <ion-input type="file"></ion-input>
         </ion-item>
 
-        
-
       </form>
     </mat-step>
 
   </mat-stepper>
-
-
-
-
-
 
 </ion-content>
 

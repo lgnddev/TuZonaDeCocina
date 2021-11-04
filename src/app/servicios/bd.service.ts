@@ -14,9 +14,9 @@ export class BDService {
 
   usuario = new BehaviorSubject([]);
 
-  CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY autoincrement, nom_tipo_usu Varchar(20) NOT NULL);"; 
-  CTipoReceta: string = "CREATE TABLE IF NOT EXISTS TipoReceta(id_tipo INTEGER PRIMARY KEY autoincrement, tipo Varchar(20) NOT NULL);";
-  CDificultad: string = "CREATE TABLE IF NOT EXISTS Dificultad(id_difi INTEGER PRIMARY KEY autoincrement, dificultad Varchar(20) NOT NULL);";
+  CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY, nom_tipo_usu Varchar(20) NOT NULL);"; 
+  CTipoReceta: string = "CREATE TABLE IF NOT EXISTS TipoReceta(id_tipo INTEGER PRIMARY KEY, tipo Varchar(20) NOT NULL);";
+  CDificultad: string = "CREATE TABLE IF NOT EXISTS Dificultad(id_difi INTEGER PRIMARY KEY, dificultad Varchar(20) NOT NULL);";
   CUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario(id_usu INTEGER PRIMARY KEY autoincrement, nombre VARCHAR(30) NOT NULL, apellidos VARCHAR(30) NOT NULL, f_nacimiento DATE NOT NULL"+
                     ", email VARCHAR(30) NOT NULL, contrasena VARCHAR(12) NOT NULL, id_tipo_usu INTEGER NOT NULL, FOREIGN KEY(id_tipo_usu) references TipoUsuario(id_tipo_usu));";
   CReceta: string = "CREATE TABLE IF NOT EXISTS Receta(id_receta INTEGER PRIMARY KEY autoincrement, nom_receta VARCHAR(30) NOT NULL, tiempo INTEGER NOT NULL, ingredientes TEXT NOT NULL" +
@@ -27,17 +27,17 @@ export class BDService {
   CFavorito: string = "CREATE TABLE IF NOT EXISTS Favorito(id_favo INTEGER PRIMARY KEY autoincrement, id_usu INTEGER NOT NULL, id_receta INTEGER NOT NULL" +
                   ", FOREIGN KEY(id_usu) references Usuario(id_usu),FOREIGN KEY(id_receta) references Receta(id_receta));";
 
-  rTipoUsuario1: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (1, 'Administrador');";
-  rTipoUsuario2: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (2, 'Cliente');";
+  rTipoUsuario1: string = "INSERT or IGNORE INTO TipoUsuario(id_tipo_usu, nom_tipo_usu) VALUES (1, 'Administrador');";
+  rTipoUsuario2: string = "INSERT or IGNORE INTO TipoUsuario(id_tipo_usu, nom_tipo_usu) VALUES (2, 'Cliente');";
 
-  rTipoReceta1: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (1, 'Desayuno');";
-  rTipoReceta2: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (2, 'Ensalada');";
-  rTipoReceta3: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (3, 'Almorzar');";
-  rTipoReceta4: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (4, 'Postre');";
+  rTipoReceta1: string = "INSERT or IGNORE INTO TipoReceta(id_tipo, tipo) VALUES (1, 'Desayuno');";
+  rTipoReceta2: string = "INSERT or IGNORE INTO TipoReceta(id_tipo, tipo) VALUES (2, 'Ensalada');";
+  rTipoReceta3: string = "INSERT or IGNORE INTO TipoReceta(id_tipo, tipo) VALUES (3, 'Almorzar');";
+  rTipoReceta4: string = "INSERT or IGNORE INTO TipoReceta(id_tipo, tipo) VALUES (4, 'Postre');";
 
-  rDificultad1: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (1, 'Facil');";
-  rDificultad2: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (2, 'Medio');";
-  rDificultad3: string = "INSERT or IGNORE INTO (id_tipo_usu, nom_tipo_usu, ) VALUES (3, 'Dificil');";
+  rDificultad1: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (1, 'Facil');";
+  rDificultad2: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (2, 'Medio');";
+  rDificultad3: string = "INSERT or IGNORE INTO Dificultad(id_difi,dificultad) VALUES (3, 'Dificil');";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -74,7 +74,7 @@ export class BDService {
       await this.database.executeSql(this.CReceta, []);
       await this.database.executeSql(this.CValoracion, []);
       await this.database.executeSql(this.CFavorito, []);
-      //datos respectivos del tipo de receta, tipo de usuario y dificultad de la receta
+      //datos respectivos al tipo de receta, tipo de usuario y dificultad de la receta
       await this.database.executeSql(this.rTipoUsuario1, []);
       await this.database.executeSql(this.rTipoUsuario2, []);
       await this.database.executeSql(this.rTipoReceta1, []);
@@ -85,7 +85,6 @@ export class BDService {
       await this.database.executeSql(this.rDificultad2, []);
       await this.database.executeSql(this.rDificultad3, []);
       //this.presentAlert("Creo la Tabla");
-      //this.buscarUsuario();
       this.isDbReady.next(true);
       this.login("", "");
     } catch (e) {
@@ -125,6 +124,11 @@ export class BDService {
     });
 
     await alert.present();
+  }
+
+  addReceta(nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) {
+    let data = [nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu];
+    return this.database.executeSql('INSERT INTO Receta (nom_receta, tiempo, ingredientes, preparacion, valor_final, descripcion, id_difi, id_tipo, id_usu) VALUES (?, ?, ?, ?, 0, ?, ?, ?, ?)', data);
   }
 
 }

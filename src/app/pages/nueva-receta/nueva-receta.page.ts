@@ -1,7 +1,8 @@
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
+import { BDService } from 'src/app/servicios/bd.service';
 
 @Component({
   selector: 'app-nueva-receta',
@@ -9,6 +10,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./nueva-receta.page.scss'],
 })
 export class NuevaRecetaPage implements OnInit {
+
+  nreceta: any = {
+    nom_receta:'',
+    tiempo:'',
+    ingredientes:'',
+    preparacion:'',
+    valor_final:'',
+    descripcion:'',
+    id_difi:'',
+    id_tipo:'',
+    id_usu:''
+  }
   
 
   @ViewChild('stepper') stepper;
@@ -22,7 +35,7 @@ export class NuevaRecetaPage implements OnInit {
   ingrediente: string;
   cantidad: string;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder, private router: Router, private servicioDB: BDService) { }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -66,6 +79,10 @@ export class NuevaRecetaPage implements OnInit {
     } else {
       this.startOfForm = false;
     }
+  }
+
+  guardar(){
+    this.servicioDB.addReceta(this.nreceta.nom_receta, this.nreceta.tiempo, this.nreceta.ingredientes, this.nreceta.preparacion,this.nreceta.descripcion,this.nreceta.id_difi, this.nreceta.id_tipo, this.nreceta.id_usu);
   }
 
 }

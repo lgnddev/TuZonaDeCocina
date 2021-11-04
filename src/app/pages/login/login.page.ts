@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
     if (this.usuario.length == 0) {
       this.presentToast("El usuario no existe")
     } else {
-      this.router.navigate(['folder/:id'])
+      this.router.navigate(['folder/Inbox:id'])
     }
   }
 

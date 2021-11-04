@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.page.html',
@@ -21,6 +22,11 @@ export class FolderPage implements OnInit {
     let tipo = $event.detail.value;
     this.router.navigate(['folder/Inbox/' + tipo]);
   }
+
+  /*getItem($event){
+    const valor =  $event.target.value;
+    return this.database.executeSql()
+  }*/
 
 
 }
