@@ -6,12 +6,12 @@
       <img src="../../../assets/icon/logo.png" style="width: 25%">
       <ion-item class="barras">
         <ion-label position="floating">Usuario</ion-label>
-        <ion-input type="text" [(ngModel)]="login.Usuario" required></ion-input>
+        <ion-input type="text" [(ngModel)]="usuarioIngresado.Usuario" required></ion-input>
       </ion-item>
 
       <ion-item class="barras">
         <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="login.Contrasena" required></ion-input>
+        <ion-input type="password" [(ngModel)]="usuarioIngresado.Contrasena" required></ion-input>
       </ion-item>
       <div *ngIf="load">
         <mat-progress-spinner [color]="color" [mode]="mode" [value]="value" [diameter]="50">
@@ -22,7 +22,7 @@
     <ion-grid class="ion-padding-bottom" style="padding-bottom: 64px">
       <ion-row class="ion-align-items-center">
         <ion-col size="12" class="ion-text-center">
-          <ion-button expand="full" shape="round" (click)="ingresar()" class="ion-margin-vertical boton"
+          <ion-button expand="full" shape="round" (click)="login()" class="ion-margin-vertical boton"
             style="margin-top: 32px ; border-radius: 128px !important">Iniciar Sesion</ion-button>
         </ion-col>
         <ion-col size="12" class="ion-text-center">

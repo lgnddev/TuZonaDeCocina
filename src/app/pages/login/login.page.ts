@@ -4,6 +4,7 @@ import { AnimationController } from '@ionic/angular';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { ToastController } from '@ionic/angular';
+import { BDService } from 'src/app/servicios/bd.service';
 
 @Component({
   selector: 'app-login',
@@ -13,20 +14,19 @@ import { ToastController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   @ViewChild("title", { read: ElementRef, static: true }) title: ElementRef;
 
-  login: any = {
+  usuarioIngresado: any = {
     Usuario: "",
     Contrasena: ""
   };
-
-  user = "Jorge";
-  pass = 1234;
 
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'indeterminate';
   public load: Boolean = false;
   
+  field: string = "";
+  usuario: any = []
 
-  constructor(private router: Router, private animationCtrl: AnimationController, public toastController: ToastController) { }
+  constructor(private router: Router, private animationCtrl: AnimationController, public toastController: ToastController, private servicioDB: BDService) { }
 
   ngOnInit() {
     const animation = this.animationCtrl
@@ -35,32 +35,22 @@ export class LoginPage implements OnInit {
       .duration(1500)
       .fromTo("opacity", 0, 1);
     animation.play();
+
+    this.servicioDB.dbState().subscribe((res) =>{
+      if(res){
+        this.servicioDB.fetchUsuario().subscribe(item =>{
+          this.usuario = item;
+        })
+      }
+    });
   }
   
-  field: string = "";
-  //this.auth.login(this.login.Usuario, this.login.Password);
-  ingresar() {
-    if (this.validateModel(this.login)) {
-      if (this.user == this.login.Usuario && this.pass == this.login.Contrasena) {
-        this.presentToast("Bienvenido " + this.login.Usuario);
-        let navigationExtras: NavigationExtras = {
-          state: {
-            user: this.login.user
-          }
-        }
-        this.load = true;
-        setTimeout(() => {
-          this.load = false;
-          this.router.navigate(['/folder/Inbox'], navigationExtras);
-        }, 2000)
-        this.login.user = null;
-      }
-      else {
-        this.presentToast("Usuario y/o contraseña incorrecta");
-      }
-    }
-    else {
-      this.presentToast("Falta el campo " + this.field);
+  async login(){
+    await this.servicioDB.login(this.usuarioIngresado.Usuario, this.usuarioIngresado.Contrasena)
+    if (this.usuario.length == 0) {
+      this.presentToast("El usuario no existe")
+    } else {
+      this.router.navigate(['folder/:id'])
     }
   }
 
@@ -74,15 +64,5 @@ export class LoginPage implements OnInit {
       }
     );
     toast.present();
-  }
-
-  validateModel(model: any) {
-    for (var [key, value] of Object.entries(model)) {
-      if (value == "") {
-        this.field = key;
-        return false;
-      }
-    }
-    return true;
   }
 }

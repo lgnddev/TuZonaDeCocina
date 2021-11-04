@@ -1,5 +1,4 @@
 ion-content.fondo{
-    --padding-top: 70px;
     --background: url(../../../assets/icon/fondo.jpg) no-repeat center/cover fixed;
   }
   
@@ -26,12 +25,7 @@ ion-content.fondo{
   .fondo1{
     background-color: rgba(0, 0, 0, 0.712);
   }
-  
-  .blur {
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(2px);
-  }
-  
-  .blurtest{
-    filter: blur(0px);
+
+  label{
+    color: rgba(255, 255, 255, 0.712);;
   }

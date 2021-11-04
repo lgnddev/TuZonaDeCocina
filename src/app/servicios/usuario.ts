@@ -7,3 +7,7 @@ export class Usuario {
     contrasena:String;
     id_tipo_usu:Number;
 }
+
+export class idUsuario {
+    id_usu:Number;
+}
