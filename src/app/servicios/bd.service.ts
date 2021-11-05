@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { AlertController, Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -14,18 +15,18 @@ export class BDService {
 
   usuario = new BehaviorSubject([]);
 
-  CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY, nom_tipo_usu Varchar(20) NOT NULL);"; 
+  CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY, nom_tipo_usu Varchar(20) NOT NULL);";
   CTipoReceta: string = "CREATE TABLE IF NOT EXISTS TipoReceta(id_tipo INTEGER PRIMARY KEY, tipo Varchar(20) NOT NULL);";
   CDificultad: string = "CREATE TABLE IF NOT EXISTS Dificultad(id_difi INTEGER PRIMARY KEY, dificultad Varchar(20) NOT NULL);";
-  CUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario(id_usu INTEGER PRIMARY KEY autoincrement, nombre VARCHAR(30) NOT NULL, apellidos VARCHAR(30) NOT NULL, f_nacimiento DATE NOT NULL"+
-                    ", email VARCHAR(30) NOT NULL, contrasena VARCHAR(12) NOT NULL, id_tipo_usu INTEGER NOT NULL, FOREIGN KEY(id_tipo_usu) references TipoUsuario(id_tipo_usu));";
+  CUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario(id_usu INTEGER PRIMARY KEY autoincrement, nombre VARCHAR(30) NOT NULL, apellidos VARCHAR(30) NOT NULL, f_nacimiento DATE NOT NULL" +
+    ", email VARCHAR(30) NOT NULL, contrasena VARCHAR(12) NOT NULL, id_tipo_usu INTEGER NOT NULL, FOREIGN KEY(id_tipo_usu) references TipoUsuario(id_tipo_usu));";
   CReceta: string = "CREATE TABLE IF NOT EXISTS Receta(id_receta INTEGER PRIMARY KEY autoincrement, nom_receta VARCHAR(30) NOT NULL, tiempo INTEGER NOT NULL, ingredientes TEXT NOT NULL" +
-                   ", preparacion TEXT NOT NULL, valor_final INTEGER NOT NULL, descripcion TEXT NOT NULL, id_difi INTEGER NOT NULL, id_tipo INTEGER NOT NULL, id_usu INTEGER NOT NULL" +
-                   ", FOREIGN KEY(id_difi) references Dificultad(id_difi), FOREIGN KEY(id_tipo) references TipoReceta(id_tipo), FOREIGN KEY(id_usu) references Usuario(id_usu));";
+    ", preparacion TEXT NOT NULL, valor_final INTEGER NOT NULL, descripcion TEXT NOT NULL, id_difi INTEGER NOT NULL, id_tipo INTEGER NOT NULL, id_usu INTEGER NOT NULL" +
+    ", FOREIGN KEY(id_difi) references Dificultad(id_difi), FOREIGN KEY(id_tipo) references TipoReceta(id_tipo), FOREIGN KEY(id_usu) references Usuario(id_usu));";
   CValoracion: string = "CREATE TABLE IF NOT EXISTS Valoracion(id_valor INTEGER PRIMARY KEY autoincrement, comentario VARCHAR(200) NOT NULL, fecha_valor DATE NOT NULL" +
-                  ", id_usu INTEGER NOT NULL, id_receta INTEGER NOT NULL, FOREIGN KEY(id_usu) references Usuario(id_usu),FOREIGN KEY(id_receta) references Receta(id_receta));";
+    ", id_usu INTEGER NOT NULL, id_receta INTEGER NOT NULL, FOREIGN KEY(id_usu) references Usuario(id_usu),FOREIGN KEY(id_receta) references Receta(id_receta));";
   CFavorito: string = "CREATE TABLE IF NOT EXISTS Favorito(id_favo INTEGER PRIMARY KEY autoincrement, id_usu INTEGER NOT NULL, id_receta INTEGER NOT NULL" +
-                  ", FOREIGN KEY(id_usu) references Usuario(id_usu),FOREIGN KEY(id_receta) references Receta(id_receta));";
+    ", FOREIGN KEY(id_usu) references Usuario(id_usu),FOREIGN KEY(id_receta) references Receta(id_receta));";
 
   rTipoUsuario1: string = "INSERT or IGNORE INTO TipoUsuario(id_tipo_usu, nom_tipo_usu) VALUES (1, 'Administrador');";
   rTipoUsuario2: string = "INSERT or IGNORE INTO TipoUsuario(id_tipo_usu, nom_tipo_usu) VALUES (2, 'Cliente');";
@@ -41,7 +42,7 @@ export class BDService {
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private sqlite: SQLite, private platform: Platform, public alertController: AlertController) {
+  constructor(private router: Router, private sqlite: SQLite, private platform: Platform, public alertController: AlertController) {
     this.crearBD();
   }
 
@@ -97,15 +98,34 @@ export class BDService {
     return this.database.executeSql('INSERT INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES (?, ?, ?, ?, ?, ?)', data)
   }
 
-  login(email, contrasena){
+  /*validarUsu(email, contrasena) {
+    return this.database.executeSql('SELECT email, contrasena FROM Usuario;', []).then(res => {
+
+      if (res.rows.length > 0) {
+        // this.presentAlert("c");
+        for (var i = 0; i < res.rows.length; i++) {
+          if (email == res.rows.item(i).email && contrasena == res.rows.item(i).contrasena) {
+            this.router.navigate(['/folder/Inbox']);
+            break;
+          }
+          else {
+            this.presentAlert('El correo (y/o) la contraseña es incorrecta')
+          }
+        }
+      }
+
+    });
+  }*/
+
+  login(email, contrasena) {
     let data = [email, contrasena]
-    return this.database.executeSql('SELECT id_usu FROM Usuario WHERE email = ? AND contrasena = ? ;', [data[0],data[1]]).then(res => {
+    return this.database.executeSql('SELECT id_usu FROM Usuario WHERE email = ? AND contrasena = ? ;', [data[0], data[1]]).then(res => {
       let items: idUsuario[] = [];
       if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) { 
-          items.push({ 
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
             id_usu: res.rows.item(i).id_usu
-           });
+          });
         }
       }
       this.usuario.next(items);
