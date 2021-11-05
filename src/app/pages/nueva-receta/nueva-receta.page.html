@@ -20,10 +20,10 @@
         </center>
 
         <ion-item class="ion-margin-bottom">
-          <ion-input placeholder="Titulo de la receta" [(ngModel)]=nreceta.nom_receta></ion-input>
+          <ion-input placeholder="Titulo de la receta" [(ngModel)]=nreceta.nom_receta [ngModelOptions]="{standalone: true}"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-textarea placeholder="Descripcion"  [(ngModel)]=nreceta.descripcion rows=7></ion-textarea>
+          <ion-textarea placeholder="Descripcion"  [(ngModel)]=nreceta.descripcion rows=7 [ngModelOptions]="{standalone: true}"></ion-textarea>
         </ion-item>
 
       </form>
@@ -90,7 +90,7 @@
         </center>
 
         <ion-item>
-          <ion-textarea placeholder="Preparacion" [(ngModel)]=nreceta.preparacion rows=15></ion-textarea>
+          <ion-textarea placeholder="Preparacion" [(ngModel)]=nreceta.preparacion rows=15 [ngModelOptions]="{standalone: true}"></ion-textarea>
         </ion-item>
       </form>
     </mat-step>
@@ -123,7 +123,7 @@
       <button *ngIf="!startOfForm" mat-button (click)="Anterior()">Anterior</button>
 
       <button *ngIf="!endOfForm" mat-button (click)="Siguente()">Siguente</button>
-      <button *ngIf="endOfForm" mat-button (click)="Siguente()">Finalizar</button>
+      <button *ngIf="endOfForm" mat-button (click)="prueba()" (click)="xdxd()">Finalizar</button>
 
     </center>
   </ion-toolbar>

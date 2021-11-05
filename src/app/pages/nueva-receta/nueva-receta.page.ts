@@ -34,6 +34,7 @@ export class NuevaRecetaPage implements OnInit {
   rows = []
   ingrediente: string;
   cantidad: string;
+  items = [];
 
   constructor(private _formBuilder: FormBuilder, private router: Router, private servicioDB: BDService) { }
 
@@ -61,11 +62,13 @@ export class NuevaRecetaPage implements OnInit {
       "Ingrediente" : this.ingrediente,
       "Cantidad" : this.cantidad
     })
+    this.items.push([this.ingrediente, this.cantidad])
   }
 
   deleteRow(d){
     const index = this.rows.indexOf(d);
     this.rows.splice(index, 1);
+    this.items.splice(index, 1);
 }
 
   selectionChange(event: StepperSelectionEvent) {
@@ -79,6 +82,18 @@ export class NuevaRecetaPage implements OnInit {
     } else {
       this.startOfForm = false;
     }
+  }
+
+  XD : string = "";
+
+  prueba(){
+    for (let y = 0; this.items.length; y++) {
+      this.XD += this.items[y][0] +'¿'+ this.items[y][1]+ '('
+    };
+  }
+
+  xdxd(){
+    console.log(this.XD)
   }
 
   guardar(){
