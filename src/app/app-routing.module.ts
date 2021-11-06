@@ -34,7 +34,15 @@ const routes: Routes = [
   {
     path: 'recuperar-contrasena',
     loadChildren: () => import('./pages/recuperar-contrasena/recuperar-contrasena.module').then( m => m.RecuperarContrasenaPageModule)
+  },  {
+    path: 'admin-recetas',
+    loadChildren: () => import('./pages/admin-recetas/admin-recetas.module').then( m => m.AdminRecetasPageModule)
+  },
+  {
+    path: 'admin-usuarios',
+    loadChildren: () => import('./pages/admin-usuarios/admin-usuarios.module').then( m => m.AdminUsuariosPageModule)
   }
+
 
 ];
 
