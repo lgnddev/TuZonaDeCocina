@@ -3,20 +3,19 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-
     <ion-title>Creador de Receta</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
 
   <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)" class="fondo1">
 
-    <mat-step [stepControl]="secondFormGroup" label="" class="fondo3">
+    <mat-step [stepControl]="secondFormGroup" label="">
       <form [formGroup]="secondFormGroup">
 
         <center>
-          <h2>Presentacion</h2>
+          <h2>Presentación</h2>
         </center>
 
         <ion-item class="ion-margin-bottom">
@@ -37,16 +36,21 @@
       <ion-row class="ion-margin-bottom">
         <ion-col size="6">
           <ion-item>
-            <ion-input [(ngModel)]="ingrediente"></ion-input>
+            <ion-input [(ngModel)]="ingrediente" placeholder="ingrediente"></ion-input>
           </ion-item>
         </ion-col >
-        <ion-col size="3">
+        <ion-col size="4">
           <ion-item>
-            <ion-input [(ngModel)]="cantidad"></ion-input>
+            <ion-input  [(ngModel)]="cantidad" placeholder="cantidad"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col>
-          <ion-icon name="add-circle-outline" (click)="agregar()"></ion-icon>
+        <ion-col size="2">
+          <ion-button class="mas" (click)="agregar()">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
+          
+            
+          
         </ion-col>
       </ion-row >
 
@@ -74,7 +78,7 @@
               {{row[column]}}
             </th>
             <th>
-              <ion-icon name="trash" (click)="deleteRow(row)" style="font-size: 25px"></ion-icon>
+              <ion-icon name="trash" (click)="deleteRow(row)"></ion-icon>
             </th>
           </tr>
         </table>
@@ -86,11 +90,11 @@
     <mat-step [stepControl]="secondFormGroup" label="">
       <form [formGroup]="secondFormGroup">
         <center>
-          <h2>Preparacion</h2>
+          <h2>Preparación</h2>
         </center>
 
         <ion-item>
-          <ion-textarea placeholder="Preparacion" [(ngModel)]=nreceta.preparacion rows=15 [ngModelOptions]="{standalone: true}"></ion-textarea>
+          <ion-textarea placeholder="Preparación" [(ngModel)]=nreceta.preparacion rows=15 [ngModelOptions]="{standalone: true}"></ion-textarea>
         </ion-item>
       </form>
     </mat-step>
@@ -117,13 +121,13 @@
 </ion-content>
 
 <ion-footer class="ion-no-border" slot="bottom">
-  <ion-toolbar >
+  <ion-toolbar class="footer">
     <center>
-      <button *ngIf="startOfForm" mat-button (click)="Anterior()">Cancelar</button>
-      <button *ngIf="!startOfForm" mat-button (click)="Anterior()">Anterior</button>
+      <ion-button *ngIf="startOfForm" mat-button (click)="Anterior()">Cancelar</ion-button>
+      <ion-button *ngIf="!startOfForm" mat-button (click)="Anterior()">Anterior</ion-button>
 
-      <button *ngIf="!endOfForm" mat-button (click)="Siguente()">Siguente</button>
-      <button *ngIf="endOfForm" mat-button (click)="prueba()" (click)="xdxd()">Finalizar</button>
+      <ion-button *ngIf="!endOfForm" mat-button (click)="Siguente()">Siguente</ion-button>
+      <ion-button *ngIf="endOfForm" mat-button (click)="prueba()" (click)="xdxd()">Finalizar</ion-button>
 
     </center>
   </ion-toolbar>

@@ -21,5 +21,17 @@ ion-card{
 }
 
 .letra{
-    --color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+}
+
+.titulo{
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.desc{
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+
 }

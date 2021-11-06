@@ -1,5 +1,28 @@
-ion-content.fondo{
-    --background: url(../../../assets/icon/fondo.jpg) no-repeat center/cover fixed;
+ion-content{
+    --background: rgb(0, 0, 0);
+}
+
+ion-item{
+  --background: rgb(136, 126, 98);
+  --color: rgb(255, 255, 255);
+}
+
+.mas{
+  --background: rgb(0, 0, 0) !important;
+  --color:rgb(247, 247, 247);
+  border: rgba(129, 127, 127, 0.425) 2px solid;
+}
+
+ion-title{
+  margin-left: 50px;
+}
+
+h2{
+  color: rgb(255, 255, 255);
+}
+
+.footer{
+  --background:rgb(0,0,0) !important;
 }
 
 .imagen{
@@ -18,7 +41,7 @@ ion-content.fondo{
   }
 
   ion-icon {
-    font-size: 50px;
+    font-size: 30px;
   }
 
   hr {
@@ -33,10 +56,13 @@ ion-content.fondo{
 }
 
 .cabecera{
-  --background:#ecc00fd0 !important;
+  --background:rgba(236, 192, 15, 0.816) !important;
 }
 
-.boton{
+ion-button{
   --background: rgb(195, 144, 50);
+}
 
+table{
+  background-color: rgb(255, 255, 255);
 }
