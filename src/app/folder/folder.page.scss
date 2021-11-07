@@ -19,7 +19,7 @@ ion-menu-button {
 #container p {
   font-size: 16px;
   line-height: 22px;
-  color: #8c8c8c;
+  color: rgb(140, 140, 140);
   margin: 0;
 }
 
@@ -28,19 +28,20 @@ ion-menu-button {
 }
 
 .cabecera{
-  --background:#ecc00fd0 !important;
+  --background:rgba(236, 192, 15, 0.816) !important;
 }
 
 .titulo{
   margin-left:25%;
-  color:white;
+  color:rgb(0, 0, 0);
 }
+
 ion-segment{
   --background:rgb(165, 154, 121);
 }
 
 ion-searchbar{
   --background:rgb(251, 249, 249); 
-  color:black;
+  color:rgb(0, 0, 0);
   --border-radius: 50px;
 }

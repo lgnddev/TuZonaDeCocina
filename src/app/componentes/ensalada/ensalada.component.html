@@ -2,17 +2,22 @@
   <ion-card>
     <ion-card-header>
       <ion-row>
-        <ion-col size="9">
-          <ion-card-title>Jorge Saez</ion-card-title>
-          <ion-card-subtitle style="margin-top: 10px;">
-            <ion-icon class="star" name="star"></ion-icon>
-            <ion-icon class="star" name="star"></ion-icon>
-            <ion-icon class="star" name="star"></ion-icon>
-            <ion-icon class="star" name="star"></ion-icon>
-            <ion-icon class="star" name="star-half"></ion-icon>
-          </ion-card-subtitle>
-        </ion-col>
         <ion-col size="3">
+
+          <div>
+            <ion-avatar slot="start">
+              <img src="../../../assets/icon/Jorge.png">
+            </ion-avatar>
+          </div>
+        </ion-col>
+
+        <ion-col size="7">
+          <h2 class="letra" style="margin-top: 10px;">
+            Jorge Saez          
+          </h2>
+        </ion-col>
+
+        <ion-col size="2">
           <ion-button class="boton">
             <ion-icon name="heart"></ion-icon>
           </ion-button>
@@ -23,16 +28,23 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-card-title style="margin-bottom: 20px;">Panqueques con Manjar</ion-card-title>
+      <ion-card-title class="titulo" >Panqueques con Manjar
+        <ion-card-subtitle style="margin-top: 10px;">
+          <ion-icon class="star" name="star"></ion-icon>
+          <ion-icon class="star" name="star"></ion-icon>
+          <ion-icon class="star" name="star"></ion-icon>
+          <ion-icon class="star" name="star"></ion-icon>
+          <ion-icon class="star" name="star-half"></ion-icon>
+        </ion-card-subtitle>
+      </ion-card-title>
       <img src="../../assets/icon/panqueques.jpg">
-      <p style="font-size: 15px;">
+      <p class="desc">
         Sorprende a todos con unos Panqueques con Manjar bajos en calorías. Prepararlos es muy fácil y en solo 30
-        minutos
-        podrás disfrutarlos junto a 12 personas.
+        minutos podrás disfrutarlos junto a 12 personas.
       </p>
 
-      <ion-button style="margin-left: 23%;" class="boton" (click)="sendUser()">
-        <ion-icon name="arrow-forward-outline"></ion-icon>
+      <ion-button style="margin-left: 33%;" class="boton" (click)="sendUser()">
+        <ion-icon (click)="sendUser()" name="arrow-forward-outline"></ion-icon>
         Ver Mas...
       </ion-button>
     </ion-card-content>
