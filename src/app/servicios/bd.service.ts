@@ -5,8 +5,9 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { AlertController, Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TipoUsuario } from './tipo-usuario';
-import { idUsuario, Usuario } from './usuario';
+import { Usuario } from './usuario';
 import { FReceta, Home, Receta } from './receta'
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class BDService {
   public database: SQLiteObject;
 
   usuario = new BehaviorSubject([]);
-  
+  buscaru = new BehaviorSubject([]);
+  buscR = new BehaviorSubject([]);
   recetasUsu = new BehaviorSubject([]);
   freceta = new BehaviorSubject([]);
   home1 = new BehaviorSubject([]);
@@ -115,7 +117,7 @@ export class BDService {
     return this.database.executeSql('SELECT email, contrasena FROM Usuario;', []).then(res => {
 
       if (res.rows.length > 0) {
-        // this.presentAlert("c");
+        this.presentAlert("c");
         for (var i = 0; i < res.rows.length; i++) {
           if (email == res.rows.item(i).email && contrasena == res.rows.item(i).contrasena) {
             this.router.navigate(['/folder/Inbox']);
@@ -233,6 +235,14 @@ export class BDService {
     return this.usuario.asObservable(); 
   }
 
+  fetchbuscarU(): Observable<Usuario[]> {
+    return this.buscaru.asObservable(); 
+  }
+
+  fetchbuscarR(): Observable<Usuario[]> {
+    return this.buscR.asObservable(); 
+  }
+
   async presentAlert(mensaje: string) {
     const alert = await this.alertController.create({
       header: 'Alert',
@@ -248,19 +258,41 @@ export class BDService {
       let items: Usuario[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-
           items.push({
-            id_usu: res.rows.item(i).id,
+            id_usu: res.rows.item(i).id_usu,
             nombre: res.rows.item(i).nombre,
-            apellidos: res.rows.item(i).apell,
-            f_nacimiento: res.rows.item(i).fnaci,
+            apellidos: res.rows.item(i).apellidos,
+            f_nacimiento: res.rows.item(i).f_nacimiento,
             email: res.rows.item(i).email,
-            contrasena: res.rows.item(i).pass,
-            id_tipo_usu: res.rows.item(i).tipo,
+            contrasena: res.rows.item(i).contrasena,
+            id_tipo_usu: res.rows.item(i).id_tipo_usu,
           });
         }
       }
-      this.usuario.next(items);
+      this.buscaru.next(items);
+
+    });
+  }
+
+  buscarRec() {
+    return this.database.executeSql('SELECT * FROM Receta;', []).then(res => {
+      let items: Receta[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            id_receta: res.rows.item(i).id_receta,
+            nom_receta: res.rows.item(i).nom_receta,
+            tiempo: res.rows.item(i).tiempo,
+            ingredientes: res.rows.item(i).ingredientes,
+            preparacion: res.rows.item(i).preparacion,
+            descripcion: res.rows.item(i).descripcion,
+            id_difi: res.rows.item(i).id_difi,
+            id_tipo: res.rows.item(i).id_tipo,
+            id_usu: res.rows.item(i).id_usu,
+          });
+        }
+      }
+      this.buscR.next(items);
 
     });
   }
@@ -284,6 +316,14 @@ export class BDService {
       .then(_ => {
         this.recetasUsuario(usuario);
       });
+  }
+
+  borrarUsu(id){
+    return this.database.executeSql('DELETE FROM Usuario WHERE id_usu = ?', [id])
+    .then(_=>{
+      console.log();
+      this.buscarUsu();
+    });
   }
 
 
