@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { BDService } from 'src/app/servicios/bd.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { BDService } from 'src/app/servicios/bd.service';
 })
 export class AlmuerzoComponent implements OnInit {
 
-  constructor(private servicioDB : BDService) { }
+  constructor(private servicioDB : BDService, private router : Router) { }
 
   listaRecetasBD : any [] = []
   
@@ -23,9 +24,11 @@ export class AlmuerzoComponent implements OnInit {
     });
   }
 
-  test(){
-    console.log("hola")
-    console.log(this.listaRecetasBD)
+  visualizar(id){
+    let navigationExtras: NavigationExtras = {
+      state: {id}
+    }
+    this.router.navigate(['/receta'], navigationExtras);
   }
 
 }

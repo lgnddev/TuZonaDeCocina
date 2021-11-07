@@ -196,7 +196,7 @@ export class BDService {
   }
 
   home() {
-    return this.database.executeSql('SELECT a.id_receta, a.nom_receta, a.tiempo, a.ingredientes, a.preparacion, a.descripcion, a.id_difi, a.id_tipo, a.id_usu,     FROM Receta a INNER JOIN usuario ON b.id_usu = a.id_usu', []).then(res => {
+    return this.database.executeSql('SELECT a.id_receta, a.nom_receta, a.tiempo, a.ingredientes, a.preparacion, a.descripcion, a.id_difi, a.id_tipo, a.id_usu, b.nombre, b.apellidos FROM Receta AS a INNER JOIN usuario AS b ON b.id_usu = a.id_usu', []).then(res => {
       let items: Home[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
@@ -210,6 +210,8 @@ export class BDService {
             id_difi: res.rows.item(i).id_difi,
             id_tipo: res.rows.item(i).id_tipo,
             id_usu: res.rows.item(i).id_usu,
+            nombre: res.rows.item(i).nombre,
+            apellidos: res.rows.item(i).apellidos
           });
         }
       }

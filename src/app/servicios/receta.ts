@@ -32,4 +32,6 @@ export class Home {
     id_difi:Number;
     id_tipo:Number;
     id_usu:Number;
+    nombre:String;
+    apellidos:String;
 }

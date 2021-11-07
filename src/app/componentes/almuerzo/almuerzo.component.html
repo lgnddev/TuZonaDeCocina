@@ -1,6 +1,6 @@
 <ion-content>
   <div *ngFor="let items of listaRecetasBD">
-    <ion-card>
+    <ion-card *ngIf="items.id_tipo == 3">
       <ion-card-header>
         <ion-row>
           <ion-col size="3">
@@ -14,7 +14,7 @@
 
           <ion-col size="7">
             <h2 class="letra" style="margin-top: 10px;">
-              Jorge Saez
+              {{items.nombre}}
             </h2>
           </ion-col>
 
@@ -43,8 +43,8 @@
           {{items.descripcion}}
         </p>
 
-        <ion-button style="margin-left: 33%;" class="boton" (click)="test()">
-          <ion-icon (click)="test()" name="arrow-forward-outline"></ion-icon>
+        <ion-button style="margin-left: 33%;" class="boton" (click)="visualizar(items.id_receta)">
+          <ion-icon (click)="visualizar(items.id_receta)" name="arrow-forward-outline"></ion-icon>
           Ver Mas...
         </ion-button>
       </ion-card-content>
