@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
+import { BDService } from 'src/app/servicios/bd.service';
 
 
 @Component({
@@ -28,9 +29,23 @@ export class TusRecetasPage implements OnInit {
     }
   ]
 
-  constructor(public actionSheetController: ActionSheetController) { }
+  listaRecetas : any []
+
+  constructor(public actionSheetController: ActionSheetController, private servicioDB: BDService) { }
 
   ngOnInit() {
+    this.servicioDB.dbState().subscribe((res) =>{
+      if(res){
+        this.servicioDB.fetchRecUsua().subscribe(item =>{
+          this.listaRecetas = item;
+        })
+      }
+    });
+  }
+
+  async TEST(){
+    await this.servicioDB.recetasUsuario(1)
+    console.log(this.listaRecetas)
   }
 
   

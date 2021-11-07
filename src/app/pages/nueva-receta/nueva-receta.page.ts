@@ -1,6 +1,7 @@
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSliderChange } from '@angular/material/slider';
 import { Router } from '@angular/router';
 import { BDService } from 'src/app/servicios/bd.service';
 
@@ -35,6 +36,7 @@ export class NuevaRecetaPage implements OnInit {
   ingrediente: string;
   cantidad: string;
   items = [];
+  valor : number;
 
   constructor(private _formBuilder: FormBuilder, private router: Router, private servicioDB: BDService) { }
 
@@ -84,20 +86,14 @@ export class NuevaRecetaPage implements OnInit {
     }
   }
 
-  XD : string = "";
-
-  prueba(){
-    for (let y = 0; this.items.length; y++) {
-      this.XD += this.items[y][0] +'¿'+ this.items[y][1]+ '('
-    };
-  }
-
-  xdxd(){
-    console.log(this.XD)
+  input(event : MatSliderChange ) {
+    this.valor = event.value
   }
 
   guardar(){
-    this.servicioDB.addReceta(this.nreceta.nom_receta, this.nreceta.tiempo, this.nreceta.ingredientes, this.nreceta.preparacion,this.nreceta.descripcion,this.nreceta.id_difi, this.nreceta.id_tipo, this.nreceta.id_usu);
+    var str = this.items.map(e => e.join(':')).join(';')
+    this.nreceta.ingredientes = str
+    console.log(this.nreceta)
   }
 
 }

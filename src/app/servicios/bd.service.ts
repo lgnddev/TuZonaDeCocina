@@ -5,6 +5,7 @@ import { AlertController, Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TipoUsuario } from './tipo-usuario';
 import { idUsuario, Usuario } from './usuario';
+import { Receta } from './receta'
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class BDService {
   public database: SQLiteObject;
 
   usuario = new BehaviorSubject([]);
+  recetasUsu = new BehaviorSubject([]);
 
   CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY, nom_tipo_usu Varchar(20) NOT NULL);";
   CTipoReceta: string = "CREATE TABLE IF NOT EXISTS TipoReceta(id_tipo INTEGER PRIMARY KEY, tipo Varchar(20) NOT NULL);";
@@ -38,7 +40,10 @@ export class BDService {
 
   rDificultad1: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (1, 'Facil');";
   rDificultad2: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (2, 'Medio');";
-  rDificultad3: string = "INSERT or IGNORE INTO Dificultad(id_difi,dificultad) VALUES (3, 'Dificil');";
+  rDificultad3: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (3, 'Dificil');";
+
+  insertUsuario: string = "INSERT or IGNORE INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES ('Cliente', 'X', '25/10/2000', 'cl', '1234', '2')"
+  insertPrueba: string = "INSERT or IGNORE INTO Receta(id_receta, nom_receta, tiempo, ingredientes, preparacion, valor_final, descripcion, id_difi, id_tipo, id_usu) VALUES (1, 'POTATOES', 25, 'LISTAINGREDIENTES', 'HAGALOUSTEDMISMO', 10 , 'SI', 1, 1, 4);";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -85,9 +90,12 @@ export class BDService {
       await this.database.executeSql(this.rDificultad1, []);
       await this.database.executeSql(this.rDificultad2, []);
       await this.database.executeSql(this.rDificultad3, []);
+      await this.database.executeSql(this.insertUsuario, []);
+      await this.database.executeSql(this.insertPrueba, []);
       //this.presentAlert("Creo la Tabla");
       this.isDbReady.next(true);
       this.login("", "");
+      this.recetasUsuario("");
     } catch (e) {
       this.presentAlert("error creartabla " + e);
     }
@@ -119,12 +127,18 @@ export class BDService {
 
   login(email, contrasena) {
     let data = [email, contrasena]
-    return this.database.executeSql('SELECT id_usu FROM Usuario WHERE email = ? AND contrasena = ? ;', [data[0], data[1]]).then(res => {
-      let items: idUsuario[] = [];
+    return this.database.executeSql('SELECT * FROM Usuario WHERE email = ? AND contrasena = ? ;', [data[0], data[1]]).then(res => {
+      let items: Usuario[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
           items.push({
-            id_usu: res.rows.item(i).id_usu
+            id_usu: res.rows.item(i).id_usu,
+            nombre: res.rows.item(i).nombre,
+            apellidos: res.rows.item(i).apellidos,
+            f_nacimiento: res.rows.item(i).f_nacimiento,
+            email: res.rows.item(i).email,
+            contrasena: res.rows.item(i).contrasena,
+            id_tipo_usu: res.rows.item(i).id_tipo_usu,
           });
         }
       }
@@ -132,7 +146,34 @@ export class BDService {
     });
   }
 
-  fetchUsuario(): Observable<idUsuario[]> {
+  recetasUsuario(id) {
+    return this.database.executeSql('SELECT * FROM Receta WHERE id_usu = ? ;', [id]).then(res => {
+      let items: Receta[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            id_receta: res.rows.item(i).id_receta,
+            nom_receta: res.rows.item(i).nom_receta,
+            tiempo: res.rows.item(i).tiempo,
+            ingredientes: res.rows.item(i).ingredientes,
+            preparacion: res.rows.item(i).preparacion,
+            valor_final: res.rows.item(i).valor_final,
+            descripcion: res.rows.item(i).descripcion,
+            id_difi: res.rows.item(i).id_difi,
+            id_tipo: res.rows.item(i).id_tipo,
+            id_usu: res.rows.item(i).id_usu,
+          });
+        }
+      }
+      this.recetasUsu.next(items);
+    });
+  }
+
+  fetchRecUsua(): Observable<Receta[]> {
+    return this.recetasUsu.asObservable();
+  }
+
+  fetchUsuario(): Observable<Usuario[]> {
     return this.usuario.asObservable();
   }
 
@@ -149,6 +190,13 @@ export class BDService {
   addReceta(nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) {
     let data = [nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu];
     return this.database.executeSql('INSERT INTO Receta (nom_receta, tiempo, ingredientes, preparacion, valor_final, descripcion, id_difi, id_tipo, id_usu) VALUES (?, ?, ?, ?, 0, ?, ?, ?, ?)', data);
+  }
+
+  updateUsuario(nombre, apellidos, f_nacimiento, email, contrasena, id_usu) {
+    let data = [nombre, apellidos, f_nacimiento, email, contrasena, id_usu];
+    return this.database.executeSql('UPDATE usuario SET nombre = ?, apellidos = ?, f_nacimiento = ?, email = ?, contrasena = ? WHERE id_usu = ?', data).then(data2 => {
+      this.login(email, contrasena);
+    })
   }
 
 }
