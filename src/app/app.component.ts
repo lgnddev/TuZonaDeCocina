@@ -9,7 +9,7 @@ export class AppComponent {
     { title: 'Home', url: '/folder/Inbox', icon: 'home' },
     { title: 'Tus Recetas', url: '/tus-recetas', icon: 'book' },
     { title: 'Favoritos', url: '/folder/Archived', icon: 'heart' },
-    { title: 'Administrar Usuarios', url: '/admin-usuarios', icon: 'book' },
+    { title: 'Administrar Usuarios', url: '/admin-usuarios', icon: 'book'},
     { title: 'Administrar Recetas', url: '/admin-recetas', icon: 'book' },
     { title: 'Configuracion', icon: 'cog' },
     { title: 'Perfil', url: '/perfil', icon: 'person' },
