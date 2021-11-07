@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BDService } from 'src/app/servicios/bd.service';
 
 @Component({
   selector: 'app-almuerzo',
@@ -7,8 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlmuerzoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private servicioDB : BDService) { }
 
-  ngOnInit() {}
+  listaRecetasBD : any [] = []
+  
+  async ngOnInit() {
+    await this.servicioDB.home();
+    await this.servicioDB.dbState().subscribe((res) =>{
+      if(res){
+        this.servicioDB.fetchHome().subscribe(item =>{
+          this.listaRecetasBD = item;
+        })
+      }
+    });
+  }
+
+  test(){
+    console.log("hola")
+    console.log(this.listaRecetasBD)
+  }
 
 }

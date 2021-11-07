@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { BDService } from 'src/app/servicios/bd.service';
 
@@ -10,30 +11,12 @@ import { BDService } from 'src/app/servicios/bd.service';
 })
 export class TusRecetasPage implements OnInit {
 
-  lista: any = [
-
-    {
-      nombre: 'Panqueques con manjar'
-    },
-    {
-      nombre: '2'
-    },
-    {
-      nombre: '3'
-    },
-    {
-      nombre: '4'
-    },
-    {
-      nombre: '5'
-    }
-  ]
 
   listaRecetasBD : any [] = []
   usuarioBD: any[] = []
   idUsuario: string = "";
 
-  constructor(public actionSheetController: ActionSheetController, private servicioDB: BDService) { }
+  constructor(public actionSheetController: ActionSheetController, private servicioDB: BDService, private router: Router) { }
 
   ngOnInit() {
     this.servicioDB.dbState().subscribe((res) =>{
@@ -64,9 +47,14 @@ export class TusRecetasPage implements OnInit {
   }
 
   
+  visualizar(id){
+    let navigationExtras: NavigationExtras = {
+      state: {id}
+    }
+    this.router.navigate(['/receta'], navigationExtras);
+  }
 
-
-  async presentActionSheet(mensaje: string) {
+  async presentActionSheet(mensaje: string, id: number) {
     const actionSheet = await this.actionSheetController.create({
       header: mensaje,
       cssClass: 'my-custom-class',
@@ -74,7 +62,10 @@ export class TusRecetasPage implements OnInit {
         text: 'Visualizar',
         icon: 'eye-outline',
         handler: () => {
-          console.log('Delete clicked');
+          let navigationExtras: NavigationExtras = {
+            state: {id}
+          }
+          this.router.navigate(['/receta'], navigationExtras);
         }
       }, {
         text: 'Modificar',
@@ -86,7 +77,7 @@ export class TusRecetasPage implements OnInit {
         text: 'Eliminar',
         icon: 'trash',
         handler: () => {
-          console.log('Play clicked');
+          this.servicioDB.deleteReceta(id, this.idUsuario)
         }
       
       }]

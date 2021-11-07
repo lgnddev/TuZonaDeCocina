@@ -19,21 +19,19 @@
       p
     </div>
     <div class="bottom-left">
-      <h2>Panqueques con Manjar</h2>
+      <h2>{{receta.nom_receta}}</h2>
     </div>
   </div>
 <center>
   <div class="container descrip">
     <h2>Descripción</h2>
-    <p>Sorprende a todos con unos Panqueques con Manjar bajos encalorías.
-      Prepararlos es muy fácil y en solo 30 minutos podrás disfrutarlos 
-      junto a 12 personas.</p>
+    <p>{{receta.descripcion}}</p>
     <ion-row style="margin-top: 20px;">
       <ion-col size=6>
-        <p class="car">Facil</p>
+        <p class="car">{{receta.id_difi}}</p>
       </ion-col>
       <ion-col size=6>
-        <p class="car">15 Minutos</p>
+        <p class="car">{{receta.tiempo}} Minutos</p>
       </ion-col>
     </ion-row>
   </div>
@@ -46,12 +44,16 @@
           Ingredientes:
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <p >
-        1 1/2 Taza de leche semidescremada <br>
-        2 Huevos <br>
-        1 Cucharada de aceite <br>
-        1 1/2 Taza de harina cernida <br>
-        12 Cucharadas de manjar</p>
+      <table>
+        <tbody>
+            <tr *ngFor="let data of ingredientes; let i = index">
+                <td *ngFor="let y of data" style="padding-left: 20px;">
+                  {{ y }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
     </mat-expansion-panel>
     <mat-expansion-panel class="fondo1" style="margin-bottom: 20px;">
       <mat-expansion-panel-header>
@@ -59,18 +61,7 @@
           Preparación:
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <p>1) Coloca todos los ingredientes en una juguera, excepto el manjar, vertiendo primero los liquidos como la
-        leche,
-        huevos y aceite y al final los secos. Procesa a velocidad media durante unos segundos hasta conseguir un
-        batido
-        homogéneo.</p> <br>
-      <p>2) Luego calienta una sartén de teflón o antiadherente de diametro mediano, vierte ¾ de un cucharón y
-        distribuye por toda la sartén con movimientos circulares e inclinados con el mango de la sartén.
-        Cocina durante unos segundos hasta dorar sus bordes y voltea. Cocina unos segundos mas y repite el
-        procedimiento
-        hasta acabar la mezcla.</p> <br>
-      <p>3) Una vez listos, rellénalos uno a uno con una cucharada de manjar y enróllalos sobre sí mismos,
-        espolvorea azúcar flor y sírvelos de inmediato fríos o calientes como más te guste.</p>
+      <span style="white-space: pre-line" > {{receta.preparacion}} </span>
     </mat-expansion-panel>
   </mat-accordion>
 
@@ -85,7 +76,7 @@
       <ion-item style="margin-top: 20px;--background:rgb(199, 198, 197);">
         <ion-textarea  placeholder="Deja un comentario"></ion-textarea>
       </ion-item>
-      <ion-button expand="full" class="boton">Enviar Comentario</ion-button>
+      <ion-button expand="full" class="boton" (click)="test()">Enviar Comentario</ion-button>
     </ion-card-content>
 
   </ion-card>

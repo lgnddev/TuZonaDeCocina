@@ -5,7 +5,7 @@ import { AlertController, Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TipoUsuario } from './tipo-usuario';
 import { idUsuario, Usuario } from './usuario';
-import { Receta } from './receta'
+import { FReceta, Home, Receta } from './receta'
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,8 @@ export class BDService {
 
   usuario = new BehaviorSubject([]);
   recetasUsu = new BehaviorSubject([]);
+  freceta = new BehaviorSubject([]);
+  home1 = new BehaviorSubject([]);
 
   CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY, nom_tipo_usu Varchar(20) NOT NULL);";
   CTipoReceta: string = "CREATE TABLE IF NOT EXISTS TipoReceta(id_tipo INTEGER PRIMARY KEY, tipo Varchar(20) NOT NULL);";
@@ -42,8 +44,8 @@ export class BDService {
   rDificultad2: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (2, 'Medio');";
   rDificultad3: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (3, 'Dificil');";
 
-  insertUsuario: string = "INSERT or IGNORE INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES ('Cliente', 'X', '25/10/2000', 'cl', '1234', '2')"
-  insertPrueba: string = "INSERT or IGNORE INTO Receta(id_receta, nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) VALUES (1, 'POTATOES', 25, 'LISTAINGREDIENTES', 'HAGALOUSTEDMISMO' , 'SI', 1, 1, 4);";
+  //insertUsuario: string = "INSERT or IGNORE INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES ('Cliente', 'X', '25/10/2000', 'cl', '1234', '2')"
+  //insertPrueba: string = "INSERT or IGNORE INTO Receta(id_receta, nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) VALUES (1, 'POTATOES', 25, 'LISTAINGREDIENTES', 'HAGALOUSTEDMISMO' , 'SI', 1, 1, 4);";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -90,12 +92,12 @@ export class BDService {
       await this.database.executeSql(this.rDificultad1, []);
       await this.database.executeSql(this.rDificultad2, []);
       await this.database.executeSql(this.rDificultad3, []);
-      await this.database.executeSql(this.insertUsuario, []);
-      await this.database.executeSql(this.insertPrueba, []);
       //this.presentAlert("Creo la Tabla");
       this.isDbReady.next(true);
       this.login("", "");
       this.recetasUsuario("");
+      this.fichaReceta("");
+      this.home();
     } catch (e) {
       this.presentAlert("error creartabla " + e);
     }
@@ -168,6 +170,58 @@ export class BDService {
     });
   }
 
+  fichaReceta(id) {
+    return this.database.executeSql('SELECT * FROM Receta WHERE id_receta = ? ;', [id]).then(res => {
+      let items: FReceta[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            id_receta: res.rows.item(i).id_receta,
+            nom_receta: res.rows.item(i).nom_receta,
+            tiempo: res.rows.item(i).tiempo,
+            ingredientes: res.rows.item(i).ingredientes,
+            preparacion: res.rows.item(i).preparacion,
+            descripcion: res.rows.item(i).descripcion,
+            id_difi: res.rows.item(i).id_difi,
+            id_tipo: res.rows.item(i).id_tipo,
+            id_usu: res.rows.item(i).id_usu,
+          });
+        }
+      }
+      this.freceta.next(items);
+    });
+  }
+
+  home() {
+    return this.database.executeSql('SELECT a.id_receta, a.nom_receta, a.tiempo, a.ingredientes, a.preparacion, a.descripcion, a.id_difi, a.id_tipo, a.id_usu,     FROM Receta a INNER JOIN usuario ON b.id_usu = a.id_usu', []).then(res => {
+      let items: Home[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            id_receta: res.rows.item(i).id_receta,
+            nom_receta: res.rows.item(i).nom_receta,
+            tiempo: res.rows.item(i).tiempo,
+            ingredientes: res.rows.item(i).ingredientes,
+            preparacion: res.rows.item(i).preparacion,
+            descripcion: res.rows.item(i).descripcion,
+            id_difi: res.rows.item(i).id_difi,
+            id_tipo: res.rows.item(i).id_tipo,
+            id_usu: res.rows.item(i).id_usu,
+          });
+        }
+      }
+      this.home1.next(items);
+    });
+  }
+
+  fetchHome(): Observable<Home[]> {
+    return this.home1.asObservable();
+  }
+
+  fetchFRec(): Observable<FReceta[]> {
+    return this.freceta.asObservable();
+  }
+
   fetchRecUsua(): Observable<Receta[]> {
     return this.recetasUsu.asObservable();
   }
@@ -199,6 +253,14 @@ export class BDService {
       this.login(email, contrasena);
     })
   }
+
+  deleteReceta(id, usuario) {
+    return this.database.executeSql('DELETE FROM receta WHERE id_receta = ?', [id])
+      .then(_ => {
+        this.recetasUsuario(usuario);
+      });
+  }
+
 
 }
 
