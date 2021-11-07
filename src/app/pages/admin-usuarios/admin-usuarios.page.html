@@ -11,18 +11,18 @@
   <h2 style="text-align: center;">Usuarios</h2>
 
   <mat-accordion>
-    <mat-expansion-panel class="fondo1">
+    <mat-expansion-panel *ngFor="let d of usuarios" class="fondo1">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Id: 1
+          Id: {{d.id_usu}}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <p>
-        Nombre:  <br>
-        Apellidos: <br>
-        Fecha de Nacimiento: <br>
-        Email: <br>
-        Tipo de Usuario:</p>
+        Nombre: {{d.nombre}} <br>
+        Apellidos:{{d.apell}} <br>
+        Fecha de Nacimiento: {{d.fnaci}}  <br>
+        Email: {{d.email}} <br>
+        Tipo de Usuario: {{d.tipo}}</p>
     </mat-expansion-panel>
   </mat-accordion>
 </ion-content>

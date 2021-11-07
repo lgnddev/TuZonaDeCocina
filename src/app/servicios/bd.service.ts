@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EmailValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { AlertController, Platform } from '@ionic/angular';
@@ -15,6 +16,7 @@ export class BDService {
   public database: SQLiteObject;
 
   usuario = new BehaviorSubject([]);
+  
   recetasUsu = new BehaviorSubject([]);
 
   CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY, nom_tipo_usu Varchar(20) NOT NULL);";
@@ -93,6 +95,7 @@ export class BDService {
       await this.database.executeSql(this.insertUsuario, []);
       await this.database.executeSql(this.insertPrueba, []);
       //this.presentAlert("Creo la Tabla");
+      this.buscarUsu();
       this.isDbReady.next(true);
       this.login("", "");
       this.recetasUsuario("");
@@ -173,7 +176,7 @@ export class BDService {
   }
 
   fetchUsuario(): Observable<Usuario[]> {
-    return this.usuario.asObservable();
+    return this.usuario.asObservable(); 
   }
 
   async presentAlert(mensaje: string) {
@@ -184,6 +187,28 @@ export class BDService {
     });
 
     await alert.present();
+  }
+
+  buscarUsu() {
+    return this.database.executeSql('SELECT * FROM Usuario;', []).then(res => {
+      let items: Usuario[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+
+          items.push({
+            id_usu: res.rows.item(i).id,
+            nombre: res.rows.item(i).nombre,
+            apellidos: res.rows.item(i).apell,
+            f_nacimiento: res.rows.item(i).fnaci,
+            email: res.rows.item(i).email,
+            contrasena: res.rows.item(i).pass,
+            id_tipo_usu: res.rows.item(i).tipo,
+          });
+        }
+      }
+      this.usuario.next(items);
+
+    });
   }
 
   addReceta(nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) {

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BDService } from '../../servicios/bd.service';
+
 
 @Component({
   selector: 'app-admin-usuarios',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminUsuariosPage implements OnInit {
 
-  constructor() { }
+  usuarios: any [] = []
+
+  constructor(private router: Router, private servicioBD: BDService) { }
 
   ngOnInit() {
+    this.servicioBD.dbState().subscribe((res)=>{
+      if(res){
+        this.servicioBD.fetchUsuario().subscribe(item =>{
+          this.usuarios = item;
+        })
+      }
+    });
   }
 
 }
