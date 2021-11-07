@@ -10,18 +10,34 @@ import { BDService } from '../../servicios/bd.service';
 })
 export class AdminUsuariosPage implements OnInit {
 
-  usuarios: any [] = []
+  usuarios: any = [
+    {
+      id_usu: '',
+      nombre: '',
+      apellidos: '',
+      f_nacimiento: '',
+      email: '',
+      contrasena: '',
+      id_tipo_usu: ''
+    }
+  ]
 
   constructor(private router: Router, private servicioBD: BDService) { }
 
   ngOnInit() {
-    this.servicioBD.dbState().subscribe((res)=>{
-      if(res){
-        this.servicioBD.fetchUsuario().subscribe(item =>{
+    this.servicioBD.dbState().subscribe((res) => {
+      if (res) {
+        this.servicioBD.fetchbuscarU().subscribe(item => {
           this.usuarios = item;
         })
       }
     });
   }
+
+  eliminar(item) {
+    this.servicioBD.borrarUsu(this.usuarios.id_usu);
+    this.servicioBD.presentAlert("Usuario Eliminado");
+  }
+
 
 }

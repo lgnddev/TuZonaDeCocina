@@ -19,10 +19,12 @@
       </mat-expansion-panel-header>
       <p>
         Nombre: {{d.nombre}} <br>
-        Apellidos:{{d.apell}} <br>
-        Fecha de Nacimiento: {{d.fnaci}}  <br>
+        Apellidos:{{d.apellidos}} <br>
+        Fecha de Nacimiento: {{d.f_nacimiento}}  <br>
         Email: {{d.email}} <br>
-        Tipo de Usuario: {{d.tipo}}</p>
+        Tipo de Usuario: {{d.id_tipo_usu}}</p>
+
+        <ion-button (click)="eliminar(item)">Eliminar</ion-button>
     </mat-expansion-panel>
   </mat-accordion>
 </ion-content>
