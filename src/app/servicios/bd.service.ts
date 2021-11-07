@@ -23,7 +23,7 @@ export class BDService {
   CUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario(id_usu INTEGER PRIMARY KEY autoincrement, nombre VARCHAR(30) NOT NULL, apellidos VARCHAR(30) NOT NULL, f_nacimiento DATE NOT NULL" +
     ", email VARCHAR(30) NOT NULL, contrasena VARCHAR(12) NOT NULL, id_tipo_usu INTEGER NOT NULL, FOREIGN KEY(id_tipo_usu) references TipoUsuario(id_tipo_usu));";
   CReceta: string = "CREATE TABLE IF NOT EXISTS Receta(id_receta INTEGER PRIMARY KEY autoincrement, nom_receta VARCHAR(30) NOT NULL, tiempo INTEGER NOT NULL, ingredientes TEXT NOT NULL" +
-    ", preparacion TEXT NOT NULL, valor_final INTEGER NOT NULL, descripcion TEXT NOT NULL, id_difi INTEGER NOT NULL, id_tipo INTEGER NOT NULL, id_usu INTEGER NOT NULL" +
+    ", preparacion TEXT NOT NULL, descripcion TEXT NOT NULL, id_difi INTEGER NOT NULL, id_tipo INTEGER NOT NULL, id_usu INTEGER NOT NULL" +
     ", FOREIGN KEY(id_difi) references Dificultad(id_difi), FOREIGN KEY(id_tipo) references TipoReceta(id_tipo), FOREIGN KEY(id_usu) references Usuario(id_usu));";
   CValoracion: string = "CREATE TABLE IF NOT EXISTS Valoracion(id_valor INTEGER PRIMARY KEY autoincrement, comentario VARCHAR(200) NOT NULL, fecha_valor DATE NOT NULL" +
     ", id_usu INTEGER NOT NULL, id_receta INTEGER NOT NULL, FOREIGN KEY(id_usu) references Usuario(id_usu),FOREIGN KEY(id_receta) references Receta(id_receta));";
@@ -43,7 +43,7 @@ export class BDService {
   rDificultad3: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (3, 'Dificil');";
 
   insertUsuario: string = "INSERT or IGNORE INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES ('Cliente', 'X', '25/10/2000', 'cl', '1234', '2')"
-  insertPrueba: string = "INSERT or IGNORE INTO Receta(id_receta, nom_receta, tiempo, ingredientes, preparacion, valor_final, descripcion, id_difi, id_tipo, id_usu) VALUES (1, 'POTATOES', 25, 'LISTAINGREDIENTES', 'HAGALOUSTEDMISMO', 10 , 'SI', 1, 1, 4);";
+  insertPrueba: string = "INSERT or IGNORE INTO Receta(id_receta, nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) VALUES (1, 'POTATOES', 25, 'LISTAINGREDIENTES', 'HAGALOUSTEDMISMO' , 'SI', 1, 1, 4);";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -157,7 +157,6 @@ export class BDService {
             tiempo: res.rows.item(i).tiempo,
             ingredientes: res.rows.item(i).ingredientes,
             preparacion: res.rows.item(i).preparacion,
-            valor_final: res.rows.item(i).valor_final,
             descripcion: res.rows.item(i).descripcion,
             id_difi: res.rows.item(i).id_difi,
             id_tipo: res.rows.item(i).id_tipo,
@@ -189,7 +188,9 @@ export class BDService {
 
   addReceta(nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) {
     let data = [nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu];
-    return this.database.executeSql('INSERT INTO Receta (nom_receta, tiempo, ingredientes, preparacion, valor_final, descripcion, id_difi, id_tipo, id_usu) VALUES (?, ?, ?, ?, 0, ?, ?, ?, ?)', data);
+    return this.database.executeSql('INSERT INTO Receta (nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', data).then(data2 => {
+      this.recetasUsuario(id_usu);
+    })
   }
 
   updateUsuario(nombre, apellidos, f_nacimiento, email, contrasena, id_usu) {

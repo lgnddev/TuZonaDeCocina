@@ -4,7 +4,6 @@ export class Receta {
     tiempo:Number;
     ingredientes:String;
     preparacion:String;
-    valor_final:Number;
     descripcion:String;
     id_difi:Number;
     id_tipo:Number;

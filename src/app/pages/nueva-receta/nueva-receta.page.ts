@@ -13,17 +13,16 @@ import { BDService } from 'src/app/servicios/bd.service';
 export class NuevaRecetaPage implements OnInit {
 
   nreceta: any = {
-    nom_receta:'',
-    tiempo:'',
-    ingredientes:'',
-    preparacion:'',
-    valor_final:'',
-    descripcion:'',
-    id_difi:'',
-    id_tipo:'',
-    id_usu:''
+    nom_receta: '',
+    tiempo: '',
+    ingredientes: '',
+    preparacion: '',
+    descripcion: '',
+    id_difi: '',
+    id_tipo: '',
+    id_usu: ''
   }
-  
+
 
   @ViewChild('stepper') stepper;
   isLinear = false;
@@ -36,7 +35,9 @@ export class NuevaRecetaPage implements OnInit {
   ingrediente: string;
   cantidad: string;
   items = [];
-  valor : number;
+  valor: number;
+  usuarioBD: any[] = []
+  idUsuario: string = "";
 
   constructor(private _formBuilder: FormBuilder, private router: Router, private servicioDB: BDService) { }
 
@@ -47,8 +48,21 @@ export class NuevaRecetaPage implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+    this.servicioDB.dbState().subscribe((res) => {
+      if (res) {
+        this.servicioDB.fetchUsuario().subscribe(item => {
+          this.usuarioBD = item;
+        })
+      }
+    });
+    this.TraspasarID();
   }
-  
+
+  TraspasarID() {
+    var usuario = this.usuarioBD[0];
+    this.idUsuario = usuario.id_usu;
+    this.nreceta.id_usu = this.idUsuario
+  }
 
   Anterior() {
     this.stepper.previous();
@@ -56,22 +70,22 @@ export class NuevaRecetaPage implements OnInit {
 
   Siguente() {
     this.stepper.next();
-    
+
   }
 
-  agregar(){
+  agregar() {
     this.rows.push({
-      "Ingrediente" : this.ingrediente,
-      "Cantidad" : this.cantidad
+      "Ingrediente": this.ingrediente,
+      "Cantidad": this.cantidad
     })
     this.items.push([this.ingrediente, this.cantidad])
   }
 
-  deleteRow(d){
+  deleteRow(d) {
     const index = this.rows.indexOf(d);
     this.rows.splice(index, 1);
     this.items.splice(index, 1);
-}
+  }
 
   selectionChange(event: StepperSelectionEvent) {
     if (event.selectedIndex == 3) {
@@ -86,14 +100,14 @@ export class NuevaRecetaPage implements OnInit {
     }
   }
 
-  input(event : MatSliderChange ) {
+  input(event: MatSliderChange) {
     this.valor = event.value
   }
 
-  guardar(){
+  guardar() {
     var str = this.items.map(e => e.join(':')).join(';')
     this.nreceta.ingredientes = str
-    console.log(this.nreceta)
+    this.servicioDB.addReceta(this.nreceta.nom_receta, this.nreceta.tiempo, this.nreceta.ingredientes, this.nreceta.preparacion, this.nreceta.descripcion, this.nreceta.id_difi, this.nreceta.id_tipo, this.nreceta.id_usu);
   }
 
 }

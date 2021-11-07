@@ -29,7 +29,9 @@ export class TusRecetasPage implements OnInit {
     }
   ]
 
-  listaRecetas : any []
+  listaRecetasBD : any [] = []
+  usuarioBD: any[] = []
+  idUsuario: string = "";
 
   constructor(public actionSheetController: ActionSheetController, private servicioDB: BDService) { }
 
@@ -37,15 +39,28 @@ export class TusRecetasPage implements OnInit {
     this.servicioDB.dbState().subscribe((res) =>{
       if(res){
         this.servicioDB.fetchRecUsua().subscribe(item =>{
-          this.listaRecetas = item;
+          this.listaRecetasBD = item;
         })
       }
     });
+    this.servicioDB.dbState().subscribe((res) => {
+      if (res) {
+        this.servicioDB.fetchUsuario().subscribe(item => {
+          this.usuarioBD = item;
+        })
+      }
+    });
+    this.TraspasarID();
+    this.TraerDatos();
   }
 
-  async TEST(){
-    await this.servicioDB.recetasUsuario(1)
-    console.log(this.listaRecetas)
+  TraspasarID() {
+    var usuario = this.usuarioBD[0];
+    this.idUsuario = usuario.id_usu;
+  }
+
+  async TraerDatos(){
+    await this.servicioDB.recetasUsuario(this.idUsuario)
   }
 
   

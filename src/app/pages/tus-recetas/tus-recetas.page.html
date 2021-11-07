@@ -13,9 +13,9 @@
 <div>
   <ion-list>
 
-    <ion-item *ngFor="let i of lista" class="lista">
-      <ion-icon slot="end" name="ellipsis-vertical-outline" (click)="presentActionSheet(i.nombre)"></ion-icon>
-      <ion-label [routerLink]="['/receta']">{{i.nombre}}</ion-label>
+    <ion-item *ngFor="let i of listaRecetasBD" class="lista">
+      <ion-icon slot="end" name="ellipsis-vertical-outline" (click)="presentActionSheet(i.nom_receta)"></ion-icon>
+      <ion-label [routerLink]="['/receta']">{{i.nom_receta}}</ion-label>
     </ion-item>
 
   </ion-list>
@@ -26,13 +26,4 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="TEST()" class="boton">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-
-
 </ion-content>
