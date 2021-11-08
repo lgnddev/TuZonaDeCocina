@@ -35,8 +35,8 @@ export class AdminUsuariosPage implements OnInit {
     });
   }
 
-  eliminar(item) {
-    this.servicioBD.borrarUsu(this.usuarios.id_usu);
+  eliminar(id) {
+    this.servicioBD.borrarUsu(id);
     this.servicioBD.presentAlert("Usuario Eliminado");
   }
 

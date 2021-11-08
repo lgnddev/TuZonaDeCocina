@@ -48,7 +48,7 @@ export class BDService {
   rDificultad2: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (2, 'Medio');";
   rDificultad3: string = "INSERT or IGNORE INTO Dificultad(id_difi, dificultad) VALUES (3, 'Dificil');";
 
-  //insertUsuario: string = "INSERT or IGNORE INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES ('Cliente', 'X', '25/10/2000', 'cl', '1234', '2')"
+  insertUsuario: string = "INSERT or IGNORE INTO Usuario (id_usu, nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES (1, 'admin', 'X', '', 'admin', '1234', '1')"
   //insertPrueba: string = "INSERT or IGNORE INTO Receta(id_receta, nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_usu) VALUES (1, 'POTATOES', 25, 'LISTAINGREDIENTES', 'HAGALOUSTEDMISMO' , 'SI', 1, 1, 4);";
 
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -96,6 +96,7 @@ export class BDService {
       await this.database.executeSql(this.rDificultad1, []);
       await this.database.executeSql(this.rDificultad2, []);
       await this.database.executeSql(this.rDificultad3, []);
+      await this.database.executeSql(this.insertUsuario, []);
       //this.presentAlert("Creo la Tabla");
       this.buscarUsu();
       this.isDbReady.next(true);
@@ -311,6 +312,14 @@ export class BDService {
     return this.database.executeSql('UPDATE usuario SET nombre = ?, apellidos = ?, f_nacimiento = ?, email = ?, contrasena = ? WHERE id_usu = ?', data).then(data2 => {
       this.login(email, contrasena);
     })
+  }
+
+  updateReceta(nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_receta, id_usu) {
+    let data = [nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_receta];
+    return this.database.executeSql('UPDATE receta SET nom_receta = ?, tiempo = ?, ingredientes = ?, preparacion = ?, descripcion = ?, id_difi = ?, id_tipo = ? WHERE id_receta = ?', data)
+      .then(data2 => {
+        this.recetasUsuario(id_usu);
+      })
   }
 
   deleteReceta(id, usuario) {

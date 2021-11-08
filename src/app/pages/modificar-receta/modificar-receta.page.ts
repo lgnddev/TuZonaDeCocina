@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSliderChange } from '@angular/material/slider';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BDService } from 'src/app/servicios/bd.service';
+import { ArrayDataSource } from '@angular/cdk/collections';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-modificar-receta',
@@ -20,7 +22,8 @@ export class ModificarRecetaPage implements OnInit {
     descripcion: '',
     id_difi: '',
     id_tipo: '',
-    id_usu: ''
+    id_usu: '',
+    id_receta: ''
   }
 
 
@@ -31,15 +34,17 @@ export class ModificarRecetaPage implements OnInit {
   endOfForm: boolean = false;
   startOfForm: boolean = true;
   headers = ["Ingrediente", "Cantidad"];
-  rows = []
   ingrediente: string;
   cantidad: string;
   items = [];
   valor: number;
   idReceta: any;
-  recetaBD: any [] = [];
+  recetaBD: any[] = [];
+  rows: any[] = []
+  rows1 = [];
+  dificultad: number;
 
-  constructor(private _formBuilder: FormBuilder, private router: Router, private servicioDB: BDService, private activeroute : ActivatedRoute) { 
+  constructor(private _formBuilder: FormBuilder, private router: Router, private servicioDB: BDService, private activeroute: ActivatedRoute) {
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.idReceta = this.router.getCurrentNavigation().extras.state.id;
@@ -68,16 +73,17 @@ export class ModificarRecetaPage implements OnInit {
   traspasarDatos() {
     var receta = this.recetaBD[0];
     this.receta.id_receta = receta.id_receta,
-    this.receta.nom_receta = receta.nom_receta,
-    this.receta.tiempo = receta.tiempo,
-    this.receta.ingredientes = receta.ingredientes,
-    this.receta.preparacion = receta.preparacion,
-    this.receta.descripcion = receta.descripcion,
-    this.receta.id_difi = receta.id_difi,
-    this.receta.id_tipo = receta.id_tipo,
-    this.receta.id_usu = receta.id_usu
+      this.receta.nom_receta = receta.nom_receta,
+      this.receta.tiempo = receta.tiempo,
+      this.receta.ingredientes = receta.ingredientes,
+      this.receta.preparacion = receta.preparacion,
+      this.receta.descripcion = receta.descripcion,
+      this.receta.id_difi = receta.id_difi,
+      this.receta.id_tipo = receta.id_tipo,
+      this.receta.id_usu = receta.id_usu
+    this.rows = this.receta.ingredientes.split(";").map(function (x) { return x.split(":") })
   }
-  
+
   Anterior() {
     this.stepper.previous();
   }
@@ -88,11 +94,7 @@ export class ModificarRecetaPage implements OnInit {
   }
 
   agregar() {
-    this.rows.push({
-      "Ingrediente": this.ingrediente,
-      "Cantidad": this.cantidad
-    })
-    this.items.push([this.ingrediente, this.cantidad])
+    this.rows.push([this.ingrediente, this.cantidad])
   }
 
   deleteRow(d) {
@@ -100,6 +102,13 @@ export class ModificarRecetaPage implements OnInit {
     this.rows.splice(index, 1);
     this.items.splice(index, 1);
   }
+
+  deleteRow1(d) {
+    const index = this.rows.indexOf(d);
+    this.rows.splice(index, 1);
+    this.items.splice(index, 1);
+  }
+
 
   selectionChange(event: StepperSelectionEvent) {
     if (event.selectedIndex == 3) {
@@ -118,8 +127,29 @@ export class ModificarRecetaPage implements OnInit {
     this.valor = event.value
   }
 
-  guardar(){
-    console.log(this.receta)
+  convertir(){
+    var str = "";
+    for (var i = 0 ; i < this.rows.length; i++){
+      for (var k = 0; k < 1+1; k++){
+        if (k == 1){
+          str += this.rows[i][k]+";"
+        } else if (k == 0){
+          str += this.rows[i][k]+":"
+        }
+      }
+    }
+    str = str.slice(0, -1)
+    this.receta.ingredientes = str
   }
+  
+  guardar() {
+    this.convertir();
+    this.receta.id_difi = this.dificultad;
+    this.servicioDB.updateReceta(this.receta.nom_receta, this.receta.tiempo, this.receta.ingredientes, this.receta.preparacion, this.receta.descripcion, this.receta.id_difi, this.receta.id_tipo, this.receta.id_receta, this.receta.id_usu);
+    this.router.navigate(['/tus-recetas']);
+  }
+
+  
+
 
 }

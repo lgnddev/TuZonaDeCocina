@@ -18,19 +18,19 @@
 
   <h2 style="margin-top: 15px; margin-bottom: 0;">{{nombre}} {{apellido}}</h2>
   <ion-row style="margin-bottom: 30px;">
-    <ion-col style="text-align:center; font-size: 12px; font-family: Verdana;">
+    <ion-col style="text-align:center; font-size: 15px; font-family: Verdana;">
       1 <br> Recetas
     </ion-col>
-    <ion-col style="text-align:center; font-size: 12px; font-family: Verdana;">
+    <ion-col style="text-align:center; font-size: 15px; font-family: Verdana;">
       1 <br> Comentarios
     </ion-col>
   </ion-row>
 
 
-  <p style="font-size: 15px;"> Datos del usuario</p> 
+  <p style="font-size: 20px;"> Datos del usuario</p> 
   <ion-item lines="full" *ngIf="boton">
     <ion-label>Nombre</ion-label>
-    <ion-label class="input">{{usuario.nombre}}</ion-label>
+    <ion-label class="input" style="font-size: 18px;">{{usuario.nombre}}</ion-label>
   </ion-item>
   <ion-item *ngIf="!boton">
     <ion-label>Nombre</ion-label>
@@ -38,23 +38,23 @@
   </ion-item>
   <ion-item lines="full" *ngIf="boton">
     <ion-label>Apellido</ion-label>
-    <ion-label class="input">{{usuario.apellidos}}</ion-label>
+    <ion-label class="input" style="font-size: 18px;">{{usuario.apellidos}}</ion-label>
   </ion-item>
   <ion-item *ngIf="!boton">
     <ion-label>Apellido</ion-label>
     <ion-input style="margin-left: 71px;" value="{{usuario.apellidos}}" [(ngModel)]="usuario.apellidos"> </ion-input>
   </ion-item>
   <ion-item lines="full" *ngIf="boton">
-    <ion-label style="font-size: 10px;">Fecha de nacimiento</ion-label>
-    <ion-label class="input">{{ usuario.f_nacimiento | date:"dd / MM / yyyy" }}</ion-label>
+    <ion-label style="font-size: 18px;">Fecha de nacimiento</ion-label>
+    <ion-label class="input" style="font-size: 18px;" >{{ usuario.f_nacimiento | date:"dd / MM / yyyy" }}</ion-label>
   </ion-item>
   <ion-item *ngIf="!boton">
-    <ion-label style="font-size: 10px;">Fecha de nacimiento</ion-label>
+    <ion-label style="font-size: 18px;">Fecha de nacimiento</ion-label>
     <ion-datetime displayFormat="DD / MM / YYYY" [(ngModel)]="usuario.f_nacimiento" [ngModelOptions]="{standalone: true}" value="usuario.fnacimiento"></ion-datetime>
   </ion-item>
   <ion-item lines="full" *ngIf="boton" style="margin-bottom: 30px;">
     <ion-label >Email</ion-label>
-    <ion-label class="input">{{usuario.email}}</ion-label>
+    <ion-label class="input" style="font-size: 18px;">{{usuario.email}}</ion-label>
   </ion-item>
   <ion-item *ngIf="!boton"style="margin-bottom: 30px;">
     <ion-label >Email</ion-label>
@@ -63,7 +63,7 @@
 
   <ion-item>
     <ion-label >Contraseña</ion-label>
-    <ion-label class="input">Cambiar contraseña</ion-label>
+    <ion-label class="input" style="font-size: 18px;">Cambiar contraseña</ion-label>
   </ion-item>
     
 
