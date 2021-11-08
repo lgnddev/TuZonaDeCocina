@@ -104,7 +104,7 @@
         <center>
           <h2>Otros</h2>
         
-        <ion-label>
+        <ion-label style="color:rgb(255, 255, 255);">
           Tiempo de preparacion: {{valor}} Minutos
         </ion-label>
         <mat-slider style="width: 100%;" min="0" max="120" (input)="input($event)" [(ngModel)]="nreceta.tiempo" [ngModelOptions]="{standalone: true}"></mat-slider>
@@ -152,8 +152,8 @@
       <ion-button *ngIf="startOfForm" mat-button (click)="Anterior()">Cancelar</ion-button>
       <ion-button *ngIf="!startOfForm" mat-button (click)="Anterior()">Anterior</ion-button>
 
-      <button *ngIf="!endOfForm" mat-button (click)="Siguente()">Siguente</button>
-      <button *ngIf="endOfForm" mat-button (click)="guardar()">Finalizar</button>
+      <ion-button *ngIf="!endOfForm" mat-button (click)="Siguente()">Siguente</ion-button>
+      <ion-button *ngIf="endOfForm" mat-button (click)="guardar()">Finalizar</ion-button>
 
     </center>
   </ion-toolbar>

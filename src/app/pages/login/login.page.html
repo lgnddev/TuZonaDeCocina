@@ -6,7 +6,7 @@
       <img src="../../../assets/icon/logo.png" style="width: 25%">
       <ion-item class="barras">
         <ion-label position="floating">Correo</ion-label>
-        <ion-input type="text" [(ngModel)]="usuarioIngresado.Usuario" required></ion-input>
+        <ion-input type="email" [(ngModel)]="usuarioIngresado.Usuario" required></ion-input>
       </ion-item>
 
       <ion-item class="barras">
@@ -25,8 +25,8 @@
           <ion-button expand="full" shape="round" (click)="login()" class="ion-margin-vertical boton"
             style="margin-top: 32px ; border-radius: 128px !important">Iniciar Sesion</ion-button>
         </ion-col>
-        <ion-col size="12" class="ion-text-center">
-          <p>Aun no te has registrado?</p>
+        <ion-col size="12" class="ion-text-center titulo">
+          <p class="titulo">Aun no te has registrado?</p>
           <ion-row>
             <ion-col class="titulo"><p  [routerLink]="['/inscripcion']"> Registrarse </p></ion-col>
             <ion-col class="titulo"><p  [routerLink]="['/recuperar-contrasena']">Olvidaste tu contraseña?</p></ion-col>

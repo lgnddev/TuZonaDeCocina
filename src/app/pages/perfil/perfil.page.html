@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button defaultHref="folder/Inbox"></ion-back-button>
     </ion-buttons>
     <ion-buttons *ngIf="boton" (click)="ModoInput()" slot="end" style="margin-right: 20px; margin-top: 10px;">
       <p>Editar</p>
@@ -27,7 +27,7 @@
   </ion-row>
 
 
-  <p> Datos del usuario</p> 
+  <p style="font-size: 15px;"> Datos del usuario</p> 
   <ion-item lines="full" *ngIf="boton">
     <ion-label>Nombre</ion-label>
     <ion-label class="input">{{usuario.nombre}}</ion-label>

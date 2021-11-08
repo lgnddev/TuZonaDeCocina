@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSliderChange } from '@angular/material/slider';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { BDService } from 'src/app/servicios/bd.service';
 
 @Component({
@@ -39,7 +40,7 @@ export class NuevaRecetaPage implements OnInit {
   usuarioBD: any[] = []
   idUsuario: string = "";
 
-  constructor(private _formBuilder: FormBuilder, private router: Router, private servicioDB: BDService) { }
+  constructor(private _formBuilder: FormBuilder, private router: Router, private servicioDB: BDService, public toastController: ToastController) { }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -108,6 +109,20 @@ export class NuevaRecetaPage implements OnInit {
     var str = this.items.map(e => e.join(':')).join(';')
     this.nreceta.ingredientes = str
     this.servicioDB.addReceta(this.nreceta.nom_receta, this.nreceta.tiempo, this.nreceta.ingredientes, this.nreceta.preparacion, this.nreceta.descripcion, this.nreceta.id_difi, this.nreceta.id_tipo, this.nreceta.id_usu);
+    this.presentToast("Receta Creada");
+    this.router.navigate(['/tus-recetas']);
+
   }
 
+  async presentToast(message: string, duration?: number) {
+    const toast = await this.toastController.create(
+      {
+        cssClass: 'toast-wrapper.toast-bottom',
+        message: message,
+        position: 'bottom',
+        duration: duration ? duration : 2000
+      }
+    );
+    toast.present();
+  }
 }

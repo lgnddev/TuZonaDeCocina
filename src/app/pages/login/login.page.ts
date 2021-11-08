@@ -48,9 +48,10 @@ export class LoginPage implements OnInit {
   async login(){
     await this.servicioDB.login(this.usuarioIngresado.Usuario, this.usuarioIngresado.Contrasena)
     if (this.usuario.length == 0) {
-      this.presentToast("El usuario no existe")
+      this.presentToast("El usuario no existe");
     } else {
-      this.router.navigate(['folder/Inbox'])
+      this.router.navigate(['folder/Inbox']);
+      this.presentToast("Bienvenido(a)");
     }
   }
 
