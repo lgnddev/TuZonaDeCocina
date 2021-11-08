@@ -33,8 +33,8 @@ export class AdminRecetasPage implements OnInit {
     });
   }
 
-  eliminarR(item) {
-    this.servicioBD.borrarRec(this.recetas.id_receta);
+  eliminarR(id) {
+    this.servicioBD.borrarRec(id);
     this.servicioBD.presentAlert("Receta Eliminada");
   }
 
