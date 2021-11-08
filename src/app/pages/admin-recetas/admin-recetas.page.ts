@@ -7,9 +7,6 @@ import { BDService } from 'src/app/servicios/bd.service';
   styleUrls: ['./admin-recetas.page.scss'],
 })
 export class AdminRecetasPage implements OnInit {
-
-  constructor(private servicioBD: BDService) { }
-
   recetas: any = [
     {
       id_receta: '',
@@ -23,8 +20,10 @@ export class AdminRecetasPage implements OnInit {
       id_usu: ''
     }
   ]
+  constructor(private servicioBD: BDService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.servicioBD.buscarUsu();
     this.servicioBD.dbState().subscribe((res) => {
       if (res) {
         this.servicioBD.fetchbuscarR().subscribe(item => {
@@ -32,6 +31,11 @@ export class AdminRecetasPage implements OnInit {
         })
       }
     });
+  }
+
+  eliminarR(item) {
+    this.servicioBD.borrarRec(this.recetas.id_receta);
+    this.servicioBD.presentAlert("Receta Eliminada");
   }
 
 }

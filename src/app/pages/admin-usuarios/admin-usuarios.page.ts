@@ -24,7 +24,8 @@ export class AdminUsuariosPage implements OnInit {
 
   constructor(private router: Router, private servicioBD: BDService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.servicioBD.buscarUsu();
     this.servicioBD.dbState().subscribe((res) => {
       if (res) {
         this.servicioBD.fetchbuscarU().subscribe(item => {
@@ -38,6 +39,5 @@ export class AdminUsuariosPage implements OnInit {
     this.servicioBD.borrarUsu(this.usuarios.id_usu);
     this.servicioBD.presentAlert("Usuario Eliminado");
   }
-
 
 }

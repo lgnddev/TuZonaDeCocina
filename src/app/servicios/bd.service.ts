@@ -317,14 +317,20 @@ export class BDService {
     return this.database.executeSql('DELETE FROM receta WHERE id_receta = ?', [id])
       .then(_ => {
         this.recetasUsuario(usuario);
-      });
+    });
   }
 
   borrarUsu(id){
-    return this.database.executeSql('DELETE FROM Usuario WHERE id_usu = ?', [id])
+    return this.database.executeSql('DELETE FROM usuario WHERE id_usu = ?', [id])
     .then(_=>{
-      console.log();
       this.buscarUsu();
+    });
+  }
+
+  borrarRec(id){
+    return this.database.executeSql('DELETE FROM receta WHERE id_receta = ?', [id])
+    .then(_=>{
+      this.buscarRec();
     });
   }
 

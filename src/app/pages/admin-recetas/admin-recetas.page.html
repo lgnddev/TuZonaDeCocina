@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <h2 style="text-align: center;">Recetas</h2>
+  <h2 class="subti">Recetas</h2>
 
   <mat-accordion>
     <mat-expansion-panel *ngFor="let r of recetas" class="fondo1">
@@ -26,6 +26,7 @@
         Preparacion: {{r.preparacion}} <br>
         Tipo de Receta: {{r.id_tipo}} <br>
         Cocinero: {{r.id_usu}} </p>
+        <ion-button (click)="eliminarR(item)">Eliminar</ion-button>
     </mat-expansion-panel>
   </mat-accordion>
 </ion-content>
