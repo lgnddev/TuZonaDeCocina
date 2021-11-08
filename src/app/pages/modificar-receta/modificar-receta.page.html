@@ -1,0 +1,160 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="cabecera">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modificar Receta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <mat-stepper [linear]="isLinear" #stepper (selectionChange)="selectionChange($event)" class="fondo1">
+
+    <mat-step [stepControl]="secondFormGroup" label="">
+      <form [formGroup]="secondFormGroup">
+
+        <center>
+          <h2>Presentación</h2>
+        </center>
+
+        <ion-item class="ion-margin-bottom">
+          <ion-input placeholder="{{nom_receta}}" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-textarea placeholder="{{descripcion}}" rows=7 ></ion-textarea>
+        </ion-item>
+
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="">
+
+      <center>
+        <h2>Ingredientes</h2>
+      </center>
+      <ion-row class="ion-margin-bottom">
+        <ion-col size="6">
+          <ion-item>
+            <ion-input ></ion-input>
+          </ion-item>
+        </ion-col >
+        <ion-col size="4">
+          <ion-item>
+            <ion-input ></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button class="mas" (click)="agregar()">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
+          
+            
+          
+        </ion-col>
+      </ion-row >
+
+      <hr />
+
+      <form [formGroup]="secondFormGroup">
+
+        <table style="border-collapse:separate; border-spacing:0px 20px;">
+          <thead>
+            <tr>
+              <th style="width: 20%">
+                Ingrediente
+              </th>
+              <th style="width: 10%">
+                Cantidad
+              </th>
+              <th style="width: 10%">
+                Acciones
+              </th>
+              
+            </tr>
+          </thead>
+          <tr *ngFor="let row of rows">
+            <th *ngFor="let column of headers">
+              {{row[column]}}
+            </th>
+            <th>
+              <ion-icon name="trash" (click)="deleteRow(row)"></ion-icon>
+            </th>
+          </tr>
+        </table>
+
+
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="">
+      <form [formGroup]="secondFormGroup">
+        <center>
+          <h2>Preparación</h2>
+        </center>
+
+        <ion-item>
+          <ion-textarea placeholder="Preparación"></ion-textarea>
+        </ion-item>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="">
+      <form [formGroup]="secondFormGroup">
+        <center>
+          <h2>Otros</h2>
+        
+        <ion-label>
+          Tiempo de preparacion: {{valor}} Minutos
+        </ion-label>
+        <mat-slider style="width: 100%;" min="0" max="120" (input)="input($event)"></mat-slider>
+
+        <h4>Dificultad de la receta</h4>
+
+        <mat-radio-group>
+          <ion-col size="6">
+            <mat-radio-button value="1">Facil</mat-radio-button>
+          </ion-col>
+          <ion-col size="6">
+            <mat-radio-button value="2">Medio</mat-radio-button>
+          </ion-col>
+          <ion-col size="6">
+            <mat-radio-button value="3">Dificil</mat-radio-button>
+          </ion-col>
+        </mat-radio-group>
+      </center>
+
+      <ion-item style="padding-top: 30px;">
+        <ion-label>Tipo de Receta</ion-label>
+        <ion-select interface="action-sheet">
+          <ion-select-option value="1">Desayuno</ion-select-option>
+          <ion-select-option value="2">Ensalada</ion-select-option>
+          <ion-select-option value="3">Almuerzo</ion-select-option>
+          <ion-select-option value="4">Postre</ion-select-option>
+        </ion-select>
+      </ion-item>
+        
+        <ion-item style="padding-top: 30px;">
+          <ion-label>Imagen</ion-label>
+          <ion-input type="file"></ion-input>
+        </ion-item>
+
+      </form>
+    </mat-step>
+
+  </mat-stepper>
+
+</ion-content>
+
+<ion-footer class="ion-no-border" slot="bottom">
+  <ion-toolbar class="footer">
+    <center>
+      <ion-button *ngIf="startOfForm" mat-button (click)="Anterior()">Cancelar</ion-button>
+      <ion-button *ngIf="!startOfForm" mat-button (click)="Anterior()">Anterior</ion-button>
+
+      <button *ngIf="!endOfForm" mat-button (click)="Siguente()">Siguente</button>
+      <button *ngIf="endOfForm" mat-button (click)="guardar()">Finalizar</button>
+
+    </center>
+  </ion-toolbar>
+</ion-footer>

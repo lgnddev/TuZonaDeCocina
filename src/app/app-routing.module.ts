@@ -46,6 +46,10 @@ const routes: Routes = [
   {
     path: 'perfil',
     loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'modificar-receta',
+    loadChildren: () => import('./pages/modificar-receta/modificar-receta.module').then( m => m.ModificarRecetaPageModule)
   }
 
 

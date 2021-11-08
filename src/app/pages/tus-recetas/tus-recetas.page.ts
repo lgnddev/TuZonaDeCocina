@@ -71,7 +71,10 @@ export class TusRecetasPage implements OnInit {
         text: 'Modificar',
         icon: 'brush',
         handler: () => {
-          console.log('Share clicked');
+          let navigationExtras: NavigationExtras = {
+            state: {id}
+          }
+          this.router.navigate(['/modificar-receta'], navigationExtras);
         }
       }, {
         text: 'Eliminar',
