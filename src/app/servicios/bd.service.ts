@@ -99,6 +99,7 @@ export class BDService {
       await this.database.executeSql(this.insertUsuario, []);
       //this.presentAlert("Creo la Tabla");
       this.buscarUsu();
+      this.buscarRec();
       this.isDbReady.next(true);
       this.login("", "");
       this.recetasUsuario("");

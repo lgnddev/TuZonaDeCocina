@@ -23,7 +23,7 @@ export class AdminRecetasPage implements OnInit {
   constructor(private servicioBD: BDService) { }
 
   async ngOnInit() {
-    this.servicioBD.buscarUsu();
+    this.servicioBD.buscarRec();
     this.servicioBD.dbState().subscribe((res) => {
       if (res) {
         this.servicioBD.fetchbuscarR().subscribe(item => {
