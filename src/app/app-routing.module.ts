@@ -50,7 +50,11 @@ const routes: Routes = [
   {
     path: 'modificar-receta',
     loadChildren: () => import('./pages/modificar-receta/modificar-receta.module').then( m => m.ModificarRecetaPageModule)
+  },  {
+    path: 'camara',
+    loadChildren: () => import('./pages/camara/camara.module').then( m => m.CamaraPageModule)
   }
+
 
 
 ];
