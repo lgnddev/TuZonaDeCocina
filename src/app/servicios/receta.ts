@@ -35,3 +35,8 @@ export class Home {
     nombre:String;
     apellidos:String;
 }
+
+export class countReceta {
+    CuentaRecetas:Number;
+    CuentaComentarios:Number;
+}

@@ -18,21 +18,37 @@ export class PerfilPage implements OnInit {
     contrasena:'',
   }
   boton: boolean = true;
-
+  count: any;
   nombre : string = ""
   apellido : string = ""
-
+  contadorRecetas: any;
+  contadorComentarios: any;
   constructor(private servicioDB: BDService) { }
 
-  ngOnInit() {
-    this.servicioDB.dbState().subscribe((res) =>{
+  async ngOnInit() {
+    await this.servicioDB.dbState().subscribe((res) =>{
       if(res){
         this.servicioDB.fetchUsuario().subscribe(item =>{
           this.usuarioBD = item;
         })
       }
     });
-    this.TraspasarDatos();
+    await this.TraspasarDatos();
+    await this.servicioDB.countReceta(this.usuario.id_usu)
+    await this.servicioDB.dbState().subscribe((res) =>{
+      if(res){
+        this.servicioDB.fetchCount().subscribe(item =>{
+          this.count = item;
+        })
+      }
+    });
+    await this.traspasarCount();
+}
+
+traspasarCount(){
+  var count = this.count[0]
+  this.contadorRecetas = count.CuentaRecetas;
+  this.contadorComentarios = count.CuentaComentarios;
 }
 
   TraspasarDatos() {
@@ -57,9 +73,4 @@ export class PerfilPage implements OnInit {
       this.apellido = this.usuario.apellidos
     }
   }
-
-  
-
-
-
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { BDService } from 'src/app/servicios/bd.service';
 
 @Component({
@@ -9,9 +10,12 @@ import { BDService } from 'src/app/servicios/bd.service';
 })
 export class RecetaPage implements OnInit {
 
+  idusuario: any;
+  nombreUsuario: any;
   user: any;
   id: any;
   recetaBD: any[] = []
+  comentariosBD: any[] = []
   receta: any = {
     id_receta: '',
     nom_receta: '',
@@ -23,9 +27,11 @@ export class RecetaPage implements OnInit {
     id_tipo: '',
     id_usu: '',
   }
-  ingredientes : any [] = []
+  comentario: String = "";
+  ingredientes: any[] = []
+  usuarioBD: any[] = []
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private activeroute: ActivatedRoute, private servicioDB: BDService) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private activeroute: ActivatedRoute, private servicioDB: BDService, public alertController: AlertController) {
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.user = this.router.getCurrentNavigation().extras.state.user;
@@ -43,22 +49,39 @@ export class RecetaPage implements OnInit {
         })
       }
     });
+    await this.servicioDB.dbState().subscribe((res) => {
+      if (res) {
+        this.servicioDB.fetchUsuario().subscribe(item => {
+          this.usuarioBD = item;
+        })
+      }
+    });
     await this.traspasarDatos()
+    await this.servicioDB.listarComentarios(this.receta.id_receta)
+    await this.servicioDB.dbState().subscribe((res) => {
+      if (res) {
+        this.servicioDB.fetchValoracion().subscribe(item => {
+          this.comentariosBD = item;
+        })
+      }
+    });
   }
+
+ 
 
   traspasarDatos() {
     var receta = this.recetaBD[0];
     this.receta.id_receta = receta.id_receta,
-    this.receta.nom_receta = receta.nom_receta,
-    this.receta.tiempo = receta.tiempo,
-    this.receta.ingredientes = receta.ingredientes,
-    this.receta.preparacion = receta.preparacion,
-    this.receta.descripcion = receta.descripcion
-    if (receta.id_difi == "1"){
+      this.receta.nom_receta = receta.nom_receta,
+      this.receta.tiempo = receta.tiempo,
+      this.receta.ingredientes = receta.ingredientes,
+      this.receta.preparacion = receta.preparacion,
+      this.receta.descripcion = receta.descripcion
+    if (receta.id_difi == "1") {
       this.receta.id_difi = "Facil";
-    } else if (receta.id_difi == "2"){
+    } else if (receta.id_difi == "2") {
       this.receta.id_difi = "Medio";
-    } else if (receta.id_difi == "3"){
+    } else if (receta.id_difi == "3") {
       this.receta.id_difi = "Dificil";
     }
     if (receta.id_tipo == 1) {
@@ -71,11 +94,37 @@ export class RecetaPage implements OnInit {
       this.receta.id_tipo == "Postre"
     }
     this.receta.id_usu = receta.id_usu
-    this.ingredientes = this.receta.ingredientes.split(";").map(function(x){return x.split(":")})
+    this.ingredientes = this.receta.ingredientes.split(";").map(function (x) { return x.split(":") })
+    var usuario = this.usuarioBD[0]
+    this.idusuario = usuario.id_usu
+    this.nombreUsuario = usuario.nombre +' '+ usuario.apellidos
   }
 
-  test(){
-    console.log(this.recetaBD)
+  enviarComentario() {
+    this.servicioDB.addComentario(this.comentario, Date.now(), this.idusuario, this.receta.id_receta)
+  }
+
+  eliminarComentario(id){
+    this.servicioDB.deleteComentario(id, this.receta.id_receta)
+  }
+
+  async alertCtrlEliminar(id) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '¿Desear eliminar este comentario?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          cssClass: 'secondary',
+        }, {
+          text: 'Eliminar',
+          handler: () => {
+            this.eliminarComentario(id)
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

@@ -6,8 +6,9 @@ import { AlertController, Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TipoUsuario } from './tipo-usuario';
 import { Usuario } from './usuario';
-import { FReceta, Home, Receta } from './receta'
+import { countReceta, FReceta, Home, Receta } from './receta'
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Valoracion } from './valoracion';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,8 @@ export class BDService {
   recetasUsu = new BehaviorSubject([]);
   freceta = new BehaviorSubject([]);
   home1 = new BehaviorSubject([]);
+  valoracion = new BehaviorSubject([]);
+  count = new BehaviorSubject([]);
 
   CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY, nom_tipo_usu Varchar(20) NOT NULL);";
   CTipoReceta: string = "CREATE TABLE IF NOT EXISTS TipoReceta(id_tipo INTEGER PRIMARY KEY, tipo Varchar(20) NOT NULL);";
@@ -199,6 +202,41 @@ export class BDService {
     });
   }
 
+  listarComentarios(id) {
+    return this.database.executeSql('SELECT a.id_valor, a.comentario, a.fecha_valor, a.id_usu, a.id_receta, b.nombre, b.apellidos, b.email FROM valoracion AS a INNER JOIN usuario AS b ON a.id_usu = b.id_usu AND a.id_receta = ? ORDER BY a.fecha_valor DESC', [id]).then(res => {
+      let items: Valoracion[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            id_valor: res.rows.item(i).id_valor,
+            comentario: res.rows.item(i).comentario,
+            fecha_valor: res.rows.item(i).fecha_valor,
+            id_usu: res.rows.item(i).id_usu,
+            id_receta: res.rows.item(i).id_receta,
+            nombre: res.rows.item(i).nombre,
+            apellidos: res.rows.item(i).apellidos,
+            email: res.rows.item(i).email,
+          });
+        }
+      }
+      this.valoracion.next(items);
+    });
+  }
+
+  addComentario(comentario, fecha_valor, id_usu, id_receta) {
+    let data = [comentario, fecha_valor, id_usu, id_receta];
+    return this.database.executeSql('INSERT INTO Valoracion (comentario, fecha_valor, id_usu, id_receta) VALUES (?, ?, ?, ?)', data).then(data2 => {
+      this.listarComentarios(id_receta);
+    })
+  }
+
+  deleteComentario(idComentario, idReceta) {
+    return this.database.executeSql('DELETE FROM Valoracion WHERE id_valor = ?', [idComentario])
+      .then(_ => {
+        this.listarComentarios(idReceta);
+    });
+  }
+
   home() {
     return this.database.executeSql('SELECT a.id_receta, a.nom_receta, a.tiempo, a.ingredientes, a.preparacion, a.descripcion, a.id_difi, a.id_tipo, a.id_usu, b.nombre, b.apellidos FROM Receta AS a INNER JOIN usuario AS b ON b.id_usu = a.id_usu', []).then(res => {
       let items: Home[] = [];
@@ -223,8 +261,31 @@ export class BDService {
     });
   }
 
+  countReceta(id) {
+    return this.database.executeSql('SELECT COUNT(*) as CuentaRecetas, (SELECT COUNT(*) as CuentaComentarios FROM Valoracion WHERE id_usu = ?) as CuentaComentarios FROM Receta WHERE id_usu = ?;', [id, id]).then(res => {
+      let items: countReceta[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            CuentaRecetas: res.rows.item(i).CuentaRecetas,
+            CuentaComentarios: res.rows.item(i).CuentaComentarios,
+          });
+        }
+      }
+      this.count.next(items);
+    });
+  }
+
+  fetchCount(): Observable<countReceta[]> {
+    return this.count.asObservable();
+  }
+
   fetchHome(): Observable<Home[]> {
     return this.home1.asObservable();
+  }
+
+  fetchValoracion(): Observable<Valoracion[]> {
+    return this.valoracion.asObservable();
   }
 
   fetchFRec(): Observable<FReceta[]> {
@@ -297,7 +358,6 @@ export class BDService {
         }
       }
       this.buscR.next(items);
-
     });
   }
 

@@ -69,16 +69,38 @@
 
     <ion-card-header>
       <img style="width:20%; border-radius:50%;" src="../../../assets/icon/Jorge.png">
-      <ion-card-subtitle>{{user}}</ion-card-subtitle>
+      <label>{{nombreUsuario}}</label>
     </ion-card-header>
   
     <ion-card-content>
       <ion-item style="margin-top: 20px;--background:rgb(199, 198, 197);">
-        <ion-textarea  placeholder="Deja un comentario"></ion-textarea>
+        <ion-textarea [(ngModel)]="comentario" placeholder="Deja un comentario"></ion-textarea>
       </ion-item>
-      <ion-button expand="full" class="boton" (click)="test()">Enviar Comentario</ion-button>
+      <ion-button expand="full" class="boton" (click)="enviarComentario()">Enviar Comentario</ion-button>
     </ion-card-content>
 
   </ion-card>
+
+  <div *ngFor="let items of comentariosBD">
+    <div>
+      <ion-row>
+        <ion-col size="2">
+          <img style="border-radius:40%; margin-left: 20px;" src="../../../assets/icon/Jorge.png">
+        </ion-col>
+        <ion-col style="margin-left: 20px;" size="6">
+          <label style="font-size: 20px;"> {{items.nombre}} {{items.apellidos}} </label> <br>
+          <label style="color: rgb(19, 19, 19); font-size: 15px;"> {{items.fecha_valor | date:"dd/MM/yyyy, h:mm a" }} </label>
+        </ion-col>
+        <ion-col *ngIf="items.id_usu == idusuario">
+          <ion-button style="--background: rgba(104, 0, 0, 0.349); height: 35px; padding-top: 5px;" (click)="alertCtrlEliminar(items.id_valor)">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row style="margin-left: 0px; margin-right: 0px;">
+        <p style="font-size: 18px; word-wrap: break-word; white-space: normal; text-align: justify;"> {{items.comentario}}</p>
+      </ion-row>
+    </div>
+  </div>
 
 </ion-content>

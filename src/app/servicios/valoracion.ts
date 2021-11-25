@@ -4,4 +4,7 @@ export class Valoracion {
     fecha_valor:Date;
     id_usu:Number;
     id_receta:Number;
+    nombre:String;
+    apellidos:String;
+    email:String;
 }
