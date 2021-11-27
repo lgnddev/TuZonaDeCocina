@@ -23,21 +23,44 @@ export class CamaraPage implements OnInit {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.CAMERA
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      //saveToPhotoAlbum: true,
+      correctOrientation:true
     };
     this.camera.getPicture(options)
       .then((imageData) => {
         this.image = 'data:image/jpeg;base64,' + imageData;
       }, (err) => {
-        console.log(err);
-      });
-    /*this.base64ToGallery.base64ToGallery(this.image, { prefix: '_img' }).then((res)=>{
+        console.log(err)});      
+  }
+
+  savedGal(){
+    this.base64ToGallery.base64ToGallery(this.image.split(',')[1],{mediaScanner:true, prefix: '_img'}).then((value)=>{
       this.presentAlert("Imagen Guardada");
+      this.image == "";
     },(err)=>{
         this.presentAlert("Error al guardar");
-    }
-    );*/
+    });
   }
+
+  /*async alertaGal(pregunta: string){
+    const gallery = await this.alertController.create({
+      header: 'Alert',
+      message: pregunta,
+      buttons: [
+        {
+          text:'Aceptar',
+          handler: () => {
+            this.savedGal()}
+        },
+        {
+          text:'Cancelar',
+        }
+      ]
+    });
+
+    await gallery.present();
+  }*/
 
   async presentAlert(mensaje: string) {
     const alert = await this.alertController.create({
