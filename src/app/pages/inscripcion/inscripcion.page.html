@@ -30,7 +30,8 @@
 
         <ion-item class="barras">
           <ion-label position="floating">Correo:</ion-label>
-          <ion-input [(ngModel)]="nuevoUsuario.email" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
+          <ion-input [(ngModel)]="nuevoUsuario.email" [ngModelOptions]="{standalone: true}" type="email"
+          pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"></ion-input>
         </ion-item>
 
         <ion-item class="barras">
