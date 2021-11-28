@@ -18,7 +18,7 @@
     <ion-fab-button shape="round" class="profilebutton" (click)="btnCambiarImagen()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
-    <img [src]="imagen" class="avatar">
+    <img [src]="imagen" (click)="expandir()" class="avatar">
   </div>
 
   <h2 style="margin-top: 15px; margin-bottom: 10;">{{nombre}} {{apellido}}</h2>

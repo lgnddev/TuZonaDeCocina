@@ -25,13 +25,14 @@ import {MatRadioModule} from '@angular/material/radio';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, MatProgressSpinnerModule, MatTabsModule, MatButtonModule, MatIconModule, MatCardModule, MatExpansionModule,
     MatStepperModule, MatFormFieldModule, ReactiveFormsModule, FormsModule, MatInputModule, MatTableModule, MatSliderModule, MatRadioModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SQLite, Camera, Base64ToGallery],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SQLite, Camera, Base64ToGallery, PhotoViewer],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

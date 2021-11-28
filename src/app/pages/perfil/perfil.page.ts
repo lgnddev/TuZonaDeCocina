@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { BDService } from 'src/app/servicios/bd.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 @Component({
   selector: 'app-perfil',
@@ -26,8 +27,8 @@ export class PerfilPage implements OnInit {
   contadorRecetas: any;
   contadorComentarios: any;
   imagen: any;
-
-  constructor(private servicioDB: BDService, public actionSheetController: ActionSheetController, private camera: Camera) { }
+  
+  constructor(private platform: Platform, private servicioDB: BDService, public actionSheetController: ActionSheetController, private camera: Camera, private photoViewer: PhotoViewer) { }
 
   async ngOnInit() {
     await this.servicioDB.dbState().subscribe((res) => {
@@ -124,6 +125,14 @@ export class PerfilPage implements OnInit {
         console.log(err)
       });
       await this.servicioDB.setImagen(this.imagen,this.usuario.id_usu, this.usuario.email, this.usuario.contrasena)
+  }
+
+  expandir(){ 
+    this.platform.ready().then(()=>{
+      var photoUrl = this.imagen;
+    this.photoViewer.show(photoUrl,'Foto de Perfil',{share:true});
+
+    })
   }
 
 
