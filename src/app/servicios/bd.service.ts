@@ -30,7 +30,7 @@ export class BDService {
   CTipoReceta: string = "CREATE TABLE IF NOT EXISTS TipoReceta(id_tipo INTEGER PRIMARY KEY, tipo Varchar(20) NOT NULL);";
   CDificultad: string = "CREATE TABLE IF NOT EXISTS Dificultad(id_difi INTEGER PRIMARY KEY, dificultad Varchar(20) NOT NULL);";
   CUsuario: string = "CREATE TABLE IF NOT EXISTS Usuario(id_usu INTEGER PRIMARY KEY autoincrement, nombre VARCHAR(30) NOT NULL, apellidos VARCHAR(30) NOT NULL, f_nacimiento DATE NOT NULL" +
-    ", email VARCHAR(30) NOT NULL, contrasena VARCHAR(12) NOT NULL, id_tipo_usu INTEGER NOT NULL, FOREIGN KEY(id_tipo_usu) references TipoUsuario(id_tipo_usu));";
+    ", email VARCHAR(30) NOT NULL, contrasena VARCHAR(12) NOT NULL, id_tipo_usu INTEGER NOT NULL, imagen TEXT, FOREIGN KEY(id_tipo_usu) references TipoUsuario(id_tipo_usu));";
   CReceta: string = "CREATE TABLE IF NOT EXISTS Receta(id_receta INTEGER PRIMARY KEY autoincrement, nom_receta VARCHAR(30) NOT NULL, tiempo INTEGER NOT NULL, ingredientes TEXT NOT NULL" +
     ", preparacion TEXT NOT NULL, descripcion TEXT NOT NULL, id_difi INTEGER NOT NULL, id_tipo INTEGER NOT NULL, id_usu INTEGER NOT NULL" +
     ", FOREIGN KEY(id_difi) references Dificultad(id_difi), FOREIGN KEY(id_tipo) references TipoReceta(id_tipo), FOREIGN KEY(id_usu) references Usuario(id_usu));";
@@ -151,6 +151,7 @@ export class BDService {
             email: res.rows.item(i).email,
             contrasena: res.rows.item(i).contrasena,
             id_tipo_usu: res.rows.item(i).id_tipo_usu,
+            imagen: res.rows.item(i).imagen,
           });
         }
       }
@@ -276,6 +277,13 @@ export class BDService {
     });
   }
 
+  setImagen(imagen, id) {
+    let data = [imagen, id];
+    return this.database.executeSql('UPDATE usuario SET imagen = ? WHERE id_usu = ?', data).then(data2 => {
+      
+    })
+  }
+
   fetchCount(): Observable<countReceta[]> {
     return this.count.asObservable();
   }
@@ -331,6 +339,7 @@ export class BDService {
             email: res.rows.item(i).email,
             contrasena: res.rows.item(i).contrasena,
             id_tipo_usu: res.rows.item(i).id_tipo_usu,
+            imagen: res.rows.item(i).imagen
           });
         }
       }

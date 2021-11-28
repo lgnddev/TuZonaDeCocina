@@ -6,4 +6,5 @@ export class Usuario {
     email:String;
     contrasena:String;
     id_tipo_usu:Number;
+    imagen:String;
 }

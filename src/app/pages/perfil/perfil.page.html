@@ -14,9 +14,14 @@
 
 <ion-content>
 
-  <img src="../../../assets/icon/Jorge.png" class="avatar">
-  
-  <h2 style="margin-top: 15px; margin-bottom: 0;">{{nombre}} {{apellido}}</h2>
+  <div class="profilepic-border">
+    <ion-fab-button shape="round" class="profilebutton" (click)="btnCambiarImagen()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+    <img [src]="image" class="avatar">
+  </div>
+
+  <h2 style="margin-top: 15px; margin-bottom: 10;">{{nombre}} {{apellido}}</h2>
   <ion-row style="margin-bottom: 30px;">
     <ion-col style="text-align:center; font-size: 15px; font-family: Verdana;">
       {{contadorRecetas}} <br> Recetas
@@ -27,7 +32,7 @@
   </ion-row>
 
 
-  <p style="font-size: 20px;"> Datos del usuario</p> 
+  <p style="font-size: 20px;"> Datos del usuario</p>
   <ion-item lines="full" *ngIf="boton">
     <ion-label>Nombre</ion-label>
     <ion-label class="input" style="font-size: 18px;">{{usuario.nombre}}</ion-label>
@@ -46,23 +51,24 @@
   </ion-item>
   <ion-item lines="full" *ngIf="boton">
     <ion-label style="font-size: 18px;">Fecha de nacimiento</ion-label>
-    <ion-label class="input" style="font-size: 18px;" >{{ usuario.f_nacimiento | date:"dd / MM / yyyy" }}</ion-label>
+    <ion-label class="input" style="font-size: 18px;">{{ usuario.f_nacimiento | date:"dd / MM / yyyy" }}</ion-label>
   </ion-item>
   <ion-item *ngIf="!boton">
     <ion-label style="font-size: 18px;">Fecha de nacimiento</ion-label>
-    <ion-datetime displayFormat="DD / MM / YYYY" [(ngModel)]="usuario.f_nacimiento" [ngModelOptions]="{standalone: true}" value="usuario.fnacimiento"></ion-datetime>
+    <ion-datetime displayFormat="DD / MM / YYYY" [(ngModel)]="usuario.f_nacimiento"
+      [ngModelOptions]="{standalone: true}" value="usuario.fnacimiento"></ion-datetime>
   </ion-item>
   <ion-item lines="full" *ngIf="boton" style="margin-bottom: 30px;">
-    <ion-label >Email</ion-label>
+    <ion-label>Email</ion-label>
     <ion-label class="input" style="font-size: 18px;">{{usuario.email}}</ion-label>
   </ion-item>
-  <ion-item *ngIf="!boton"style="margin-bottom: 30px;">
-    <ion-label >Email</ion-label>
+  <ion-item *ngIf="!boton" style="margin-bottom: 30px;">
+    <ion-label>Email</ion-label>
     <ion-input style="margin-left: 84px;" value="{{usuario.email}}" [(ngModel)]="usuario.email"> </ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label >Contraseña</ion-label>
+    <ion-label>Contraseña</ion-label>
     <ion-label class="input" style="font-size: 18px;">Cambiar contraseña</ion-label>
   </ion-item>
 </ion-content>

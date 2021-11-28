@@ -31,10 +31,11 @@ export class CamaraPage implements OnInit {
       .then((imageData) => {
         this.image = 'data:image/jpeg;base64,' + imageData;
       }, (err) => {
-        console.log(err)});      
+        console.log(err)});
   }
 
   savedGal(){
+    console.log(this.image)
     this.base64ToGallery.base64ToGallery(this.image.split(',')[1],{mediaScanner:true, prefix: '_img'}).then((value)=>{
       this.presentAlert("Imagen Guardada");
       this.image == "";

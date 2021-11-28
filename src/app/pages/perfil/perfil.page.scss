@@ -1,6 +1,6 @@
 .avatar{
-    height: 110px;
-    width: 110px;
+    height: 150px;
+    width: 150px;
     background-repeat: no-repeat;
     background-position: 50%;
     border-radius: 50%;
@@ -74,4 +74,20 @@ p{
     font-family: Verdana;
     font-size: 10px;
     text-align:center;
+}
+
+.profilebutton {
+  z-index: 2;
+  position: absolute;
+  left: 55%;
+  top: 64%;
+  margin: auto;
+}
+.profilepic {
+border:1px solid #000;
+width: 65%;
+height: 65%;
+}
+.profilepic-border {
+position: relative;
 }

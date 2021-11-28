@@ -34,7 +34,7 @@ export class InscripcionPage implements OnInit {
   usuario: any []=[]
 
   registrar() {
-    this.servicioDB.addUsuario(this.nuevoUsuario.nombre, this.nuevoUsuario.apellido, this.nuevoUsuario.fnacimiento, this.nuevoUsuario.email, this.nuevoUsuario.contrasena, 1);
+    this.servicioDB.addUsuario(this.nuevoUsuario.nombre, this.nuevoUsuario.apellido, this.nuevoUsuario.fnacimiento, this.nuevoUsuario.email, this.nuevoUsuario.contrasena, 2);
     this.router.navigate(['/login']);
     this.presentToast("Usuario Registrado");
   }

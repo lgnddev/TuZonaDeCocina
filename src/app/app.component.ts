@@ -10,7 +10,17 @@ export class AppComponent implements OnInit{
   constructor(private servicioDB : BDService){}
 
   tipoUsuario: any;
-  public appPages = [
+  usuarioBD: any;
+  
+  public usuario= [
+    { title: 'Home', url: '/folder/Inbox', icon: 'home' },
+    { title: 'Tus Recetas', url: '/tus-recetas', icon: 'book' },
+    { title: 'Favoritos', url: '/folder/Archived', icon: 'heart' },
+    { title: 'Configuracion', icon: 'cog' },
+    { title: 'Perfil', url: '/perfil', icon: 'person' },
+    { title: 'Cerrar Sesion', url: '/login', icon: 'log-out' },
+  ];
+  public admin= [
     { title: 'Home', url: '/folder/Inbox', icon: 'home' },
     { title: 'Tus Recetas', url: '/tus-recetas', icon: 'book' },
     { title: 'Favoritos', url: '/folder/Archived', icon: 'heart' },
@@ -21,15 +31,13 @@ export class AppComponent implements OnInit{
     { title: 'Cerrar Sesion', url: '/login', icon: 'log-out' },
   ];
 
-  async ngOnInit(){
+   async ngOnInit(){
     await this.servicioDB.dbState().subscribe((res) =>{
       if(res){
         this.servicioDB.fetchUsuario().subscribe(item =>{
-          this.tipoUsuario = item;
+          this.usuarioBD = item;
         })
       }
     });
-    await console.log(this.tipoUsuario + 'holaa')
   }
-
 }
