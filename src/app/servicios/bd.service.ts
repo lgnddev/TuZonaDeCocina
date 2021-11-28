@@ -118,6 +118,41 @@ export class BDService {
     return this.database.executeSql('INSERT INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES (?, ?, ?, ?, ?, ?)', data)
   }
 
+  cambiarFavoritos(favorito, idUsuario, idReceta) {
+    if (favorito) {
+      let data = [idUsuario, idReceta];
+      return this.database.executeSql('INSERT INTO favorito (id_usu, id_receta) VALUES (?, ?)', data).then(data2 => {
+        this.traerFavoritos(idUsuario);
+      })
+    } else {
+      return this.database.executeSql('DELETE FROM favorito WHERE id_usu = ? AND id_receta = ?', [idUsuario, idReceta])
+        .then(_ => {
+          this.traerFavoritos(idUsuario);
+        });
+    }
+  }
+
+  traerFavoritos(idUsuario) {
+    return this.database.executeSql('', [idUsuario]).then(res => {
+      let items: Valoracion[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            id_valor: res.rows.item(i).id_valor,
+            comentario: res.rows.item(i).comentario,
+            fecha_valor: res.rows.item(i).fecha_valor,
+            id_usu: res.rows.item(i).id_usu,
+            id_receta: res.rows.item(i).id_receta,
+            nombre: res.rows.item(i).nombre,
+            apellidos: res.rows.item(i).apellidos,
+            email: res.rows.item(i).email,
+          });
+        }
+      }
+      this.valoracion.next(items);
+    });
+  }
+
   /*validarUsu(email, contrasena) {
     return this.database.executeSql('SELECT email, contrasena FROM Usuario;', []).then(res => {
 
@@ -235,11 +270,11 @@ export class BDService {
     return this.database.executeSql('DELETE FROM Valoracion WHERE id_valor = ?', [idComentario])
       .then(_ => {
         this.listarComentarios(idReceta);
-    });
+      });
   }
 
   home() {
-    return this.database.executeSql('SELECT a.id_receta, a.nom_receta, a.tiempo, a.ingredientes, a.preparacion, a.descripcion, a.id_difi, a.id_tipo, a.id_usu, b.nombre, b.apellidos FROM Receta AS a INNER JOIN usuario AS b ON b.id_usu = a.id_usu', []).then(res => {
+    return this.database.executeSql('SELECT a.id_receta, a.nom_receta, a.tiempo, a.ingredientes, a.preparacion, a.descripcion, a.id_difi, a.id_tipo, a.id_usu, b.nombre, b.apellidos, b.imagen FROM Receta AS a INNER JOIN usuario AS b ON b.id_usu = a.id_usu', []).then(res => {
       let items: Home[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
@@ -254,7 +289,8 @@ export class BDService {
             id_tipo: res.rows.item(i).id_tipo,
             id_usu: res.rows.item(i).id_usu,
             nombre: res.rows.item(i).nombre,
-            apellidos: res.rows.item(i).apellidos
+            apellidos: res.rows.item(i).apellidos,
+            imagen: res.rows.item(i).imagen
           });
         }
       }
@@ -277,10 +313,10 @@ export class BDService {
     });
   }
 
-  setImagen(imagen, id) {
+  setImagen(imagen, id, email, contrasena) {
     let data = [imagen, id];
     return this.database.executeSql('UPDATE usuario SET imagen = ? WHERE id_usu = ?', data).then(data2 => {
-      
+      this.login(email, contrasena);
     })
   }
 
@@ -305,15 +341,15 @@ export class BDService {
   }
 
   fetchUsuario(): Observable<Usuario[]> {
-    return this.usuario.asObservable(); 
+    return this.usuario.asObservable();
   }
 
   fetchbuscarU(): Observable<Usuario[]> {
-    return this.buscaru.asObservable(); 
+    return this.buscaru.asObservable();
   }
 
   fetchbuscarR(): Observable<Usuario[]> {
-    return this.buscR.asObservable(); 
+    return this.buscR.asObservable();
   }
 
   async presentAlert(mensaje: string) {
@@ -396,21 +432,21 @@ export class BDService {
     return this.database.executeSql('DELETE FROM receta WHERE id_receta = ?', [id])
       .then(_ => {
         this.recetasUsuario(usuario);
-    });
+      });
   }
 
-  borrarUsu(id){
+  borrarUsu(id) {
     return this.database.executeSql('DELETE FROM usuario WHERE id_usu = ?', [id])
-    .then(_=>{
-      this.buscarUsu();
-    });
+      .then(_ => {
+        this.buscarUsu();
+      });
   }
 
-  borrarRec(id){
+  borrarRec(id) {
     return this.database.executeSql('DELETE FROM receta WHERE id_receta = ?', [id])
-    .then(_=>{
-      this.buscarRec();
-    });
+      .then(_ => {
+        this.buscarRec();
+      });
   }
 
 

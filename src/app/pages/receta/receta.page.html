@@ -5,10 +5,14 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button ion-button icon-only>
+      <ion-button ion-button icon-only (click)="favorito()" *ngIf="!estadoFav">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
+      <ion-button ion-button icon-only (click)="favorito()" *ngIf="estadoFav">
         <ion-icon name="heart"></ion-icon>
       </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -22,20 +26,20 @@
       <h2>{{receta.nom_receta}}</h2>
     </div>
   </div>
-<center>
-  <div class="container descrip">
-    <h2>Descripción</h2>
-    <p>{{receta.descripcion}}</p>
-    <ion-row style="margin-top: 20px;">
-      <ion-col size=6>
-        <p class="car">{{receta.id_difi}}</p>
-      </ion-col>
-      <ion-col size=6>
-        <p class="car">{{receta.tiempo}} Minutos</p>
-      </ion-col>
-    </ion-row>
-  </div>
-</center>
+  <center>
+    <div class="container descrip">
+      <h2>Descripción</h2>
+      <p>{{receta.descripcion}}</p>
+      <ion-row style="margin-top: 20px;">
+        <ion-col size=6>
+          <p class="car">{{receta.id_difi}}</p>
+        </ion-col>
+        <ion-col size=6>
+          <p class="car">{{receta.tiempo}} Minutos</p>
+        </ion-col>
+      </ion-row>
+    </div>
+  </center>
 
   <mat-accordion>
     <mat-expansion-panel class="fondo1">
@@ -46,14 +50,14 @@
       </mat-expansion-panel-header>
       <table>
         <tbody>
-            <tr *ngFor="let data of ingredientes; let i = index">
-                <td *ngFor="let y of data" style="padding-left: 20px;">
-                  {{ y }}
-                </td>
-            </tr>
+          <tr *ngFor="let data of ingredientes; let i = index">
+            <td *ngFor="let y of data" style="padding-left: 20px;">
+              {{ y }}
+            </td>
+          </tr>
         </tbody>
-    </table>
-    
+      </table>
+
     </mat-expansion-panel>
     <mat-expansion-panel class="fondo1" style="margin-bottom: 20px;">
       <mat-expansion-panel-header>
@@ -61,7 +65,7 @@
           Preparación:
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <span style="white-space: pre-line" > {{receta.preparacion}} </span>
+      <span style="white-space: pre-line"> {{receta.preparacion}} </span>
     </mat-expansion-panel>
   </mat-accordion>
 
@@ -71,7 +75,7 @@
       <img style="width:20%; border-radius:50%;" src="../../../assets/icon/Jorge.png">
       <label>{{nombreUsuario}}</label>
     </ion-card-header>
-  
+
     <ion-card-content>
       <ion-item style="margin-top: 20px;--background:rgb(199, 198, 197);">
         <ion-textarea [(ngModel)]="comentario" placeholder="Deja un comentario"></ion-textarea>
@@ -89,16 +93,19 @@
         </ion-col>
         <ion-col style="margin-left: 20px;" size="6">
           <label style="font-size: 20px;"> {{items.nombre}} {{items.apellidos}} </label> <br>
-          <label style="color: rgb(19, 19, 19); font-size: 15px;"> {{items.fecha_valor | date:"dd/MM/yyyy, h:mm a" }} </label>
+          <label style="color: rgb(19, 19, 19); font-size: 15px;"> {{items.fecha_valor | date:"dd/MM/yyyy, h:mm a" }}
+          </label>
         </ion-col>
         <ion-col *ngIf="items.id_usu == idusuario">
-          <ion-button style="--background: rgba(104, 0, 0, 0.349); height: 35px; padding-top: 5px;" (click)="alertCtrlEliminar(items.id_valor)">
+          <ion-button style="--background: rgba(104, 0, 0, 0.349); height: 35px; padding-top: 5px;"
+            (click)="alertCtrlEliminar(items.id_valor)">
             <ion-icon name="close-outline"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
       <ion-row style="margin-left: 0px; margin-right: 0px;">
-        <p style="font-size: 18px; word-wrap: break-word; white-space: normal; text-align: justify;"> {{items.comentario}}</p>
+        <p style="font-size: 18px; word-wrap: break-word; white-space: normal; text-align: justify;">
+          {{items.comentario}}</p>
       </ion-row>
     </div>
   </div>

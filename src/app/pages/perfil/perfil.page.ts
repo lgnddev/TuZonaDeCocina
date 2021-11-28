@@ -10,50 +10,50 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 export class PerfilPage implements OnInit {
 
-  usuarioBD: any [] = []
+  usuarioBD: any[] = []
   usuario: any = {
     id_usu: '',
-    nombre:'',
-    apellidos:'',
-    f_nacimiento:'',
-    email:'',
-    contrasena:'',
+    nombre: '',
+    apellidos: '',
+    f_nacimiento: '',
+    email: '',
+    contrasena: '',
   }
   boton: boolean = true;
   count: any;
-  nombre : string = ""
-  apellido : string = ""
+  nombre: string = ""
+  apellido: string = ""
   contadorRecetas: any;
   contadorComentarios: any;
-  image: any = "../../../assets/icon/defaultUser.png";
-  
+  imagen: any;
+
   constructor(private servicioDB: BDService, public actionSheetController: ActionSheetController, private camera: Camera) { }
 
   async ngOnInit() {
-    await this.servicioDB.dbState().subscribe((res) =>{
-      if(res){
-        this.servicioDB.fetchUsuario().subscribe(item =>{
+    await this.servicioDB.dbState().subscribe((res) => {
+      if (res) {
+        this.servicioDB.fetchUsuario().subscribe(item => {
           this.usuarioBD = item;
         })
       }
     });
     await this.TraspasarDatos();
     await this.servicioDB.countReceta(this.usuario.id_usu)
-    await this.servicioDB.dbState().subscribe((res) =>{
-      if(res){
-        this.servicioDB.fetchCount().subscribe(item =>{
+    await this.servicioDB.dbState().subscribe((res) => {
+      if (res) {
+        this.servicioDB.fetchCount().subscribe(item => {
           this.count = item;
         })
       }
     });
     await this.traspasarCount();
-}
+  }
 
-traspasarCount(){
-  var count = this.count[0]
-  this.contadorRecetas = count.CuentaRecetas;
-  this.contadorComentarios = count.CuentaComentarios;
-}
+  traspasarCount() {
+    var count = this.count[0]
+    this.contadorRecetas = count.CuentaRecetas;
+    this.contadorComentarios = count.CuentaComentarios;
+  }
 
   TraspasarDatos() {
     var usuario = this.usuarioBD[0];
@@ -65,9 +65,10 @@ traspasarCount(){
     this.usuario.contrasena = usuario.contrasena;
     this.nombre = this.usuario.nombre
     this.apellido = this.usuario.apellidos
+    this.imagen = usuario.imagen;
   }
 
-  ModoInput(){
+  ModoInput() {
     if (this.boton) {
       this.boton = false;
     } else {
@@ -100,13 +101,13 @@ traspasarCount(){
         handler: () => {
           console.log('Play clicked');
         }
-      
+
       }]
     });
     await actionSheet.present();
   }
 
-  camara() {
+  async camara() {
     const options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -114,13 +115,15 @@ traspasarCount(){
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.CAMERA,
       //saveToPhotoAlbum: true,
-      correctOrientation:true
+      correctOrientation: true
     };
-    this.camera.getPicture(options)
+    await this.camera.getPicture(options)
       .then((imageData) => {
-        this.image = 'data:image/jpeg;base64,' + imageData;
+        this.imagen = 'data:image/jpeg;base64,' + imageData;
       }, (err) => {
-        console.log(err)});
+        console.log(err)
+      });
+      await this.servicioDB.setImagen(this.imagen,this.usuario.id_usu, this.usuario.email, this.usuario.contrasena)
   }
 
 

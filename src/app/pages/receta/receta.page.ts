@@ -30,6 +30,7 @@ export class RecetaPage implements OnInit {
   comentario: String = "";
   ingredientes: any[] = []
   usuarioBD: any[] = []
+  estadoFav: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private activeroute: ActivatedRoute, private servicioDB: BDService, public alertController: AlertController) {
     this.activeroute.queryParams.subscribe(params => {
@@ -65,6 +66,16 @@ export class RecetaPage implements OnInit {
         })
       }
     });
+  }
+
+  favorito(){
+    if (this.estadoFav) {
+      //this.servicioDB.cambiarFavoritos(false)
+      this.estadoFav = false;
+    } else {
+      //this.servicioDB.cambiarFavoritos(true)
+      this.estadoFav = true;
+    }
   }
 
  

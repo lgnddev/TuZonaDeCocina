@@ -34,6 +34,7 @@ export class Home {
     id_usu:Number;
     nombre:String;
     apellidos:String;
+    imagen:String;
 }
 
 export class countReceta {
