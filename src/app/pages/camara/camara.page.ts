@@ -17,8 +17,8 @@ export class CamaraPage implements OnInit {
   ngOnInit() {
   }
 
-  takePicture() {
-    const options: CameraOptions = {
+  async takePicture() {
+     const options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
@@ -27,15 +27,15 @@ export class CamaraPage implements OnInit {
       //saveToPhotoAlbum: true,
       correctOrientation:true
     };
-    this.camera.getPicture(options)
+    await this.camera.getPicture(options)
       .then((imageData) => {
         this.image = 'data:image/jpeg;base64,' + imageData;
       }, (err) => {
         console.log(err)});
+      await this.alertaGal("¿Quieres guardar la foto en la galería?");
   }
 
   savedGal(){
-    console.log(this.image)
     this.base64ToGallery.base64ToGallery(this.image.split(',')[1],{mediaScanner:true, prefix: '_img'}).then((value)=>{
       this.presentAlert("Imagen Guardada");
       this.image == "";
@@ -44,7 +44,7 @@ export class CamaraPage implements OnInit {
     });
   }
 
-  /*async alertaGal(pregunta: string){
+  async alertaGal(pregunta: string){
     const gallery = await this.alertController.create({
       header: 'Alert',
       message: pregunta,
@@ -61,7 +61,7 @@ export class CamaraPage implements OnInit {
     });
 
     await gallery.present();
-  }*/
+  }
 
   async presentAlert(mensaje: string) {
     const alert = await this.alertController.create({

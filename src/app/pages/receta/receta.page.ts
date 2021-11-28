@@ -31,6 +31,7 @@ export class RecetaPage implements OnInit {
   ingredientes: any[] = []
   usuarioBD: any[] = []
   estadoFav: boolean = false;
+  imagenUsuario : any;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private activeroute: ActivatedRoute, private servicioDB: BDService, public alertController: AlertController) {
     this.activeroute.queryParams.subscribe(params => {
@@ -109,6 +110,7 @@ export class RecetaPage implements OnInit {
     var usuario = this.usuarioBD[0]
     this.idusuario = usuario.id_usu
     this.nombreUsuario = usuario.nombre +' '+ usuario.apellidos
+    this.imagenUsuario = usuario.imagen
   }
 
   enviarComentario() {
