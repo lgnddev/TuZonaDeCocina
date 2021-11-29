@@ -110,13 +110,13 @@ export class InscripcionPage implements OnInit {
       header: 'Seleccionar imagen de perfil',
       buttons: [{
         text: 'Usar Camara',
-        icon: 'share',
+        icon: 'camera',
         handler: () => {
           this.camara();
         }
       }, {
         text: 'Galeria',
-        icon: 'caret-forward-circle',
+        icon: 'image',
         handler: () => {
           this.openGallery();
         }

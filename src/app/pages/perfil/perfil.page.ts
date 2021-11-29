@@ -89,20 +89,20 @@ export class PerfilPage implements OnInit {
       header: 'Cambiar imagen de perfil',
       buttons: [{
         text: 'Usar Camara',
-        icon: 'share',
+        icon: 'camera',
         handler: () => {
           this.camara();
         }
       },{
         text: 'Guardar foto en Galeria',
-        icon: 'caret-forward-circle',
+        icon: 'share',
         handler: () => {
           this.savedGal();
         }
 
       },{
         text: 'Abrir Galeria',
-        icon: 'book',
+        icon: 'image',
         handler: () => {
           this.openGallery();
         }
