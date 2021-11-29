@@ -7,4 +7,5 @@ export class Valoracion {
     nombre:String;
     apellidos:String;
     email:String;
+    imagen:String;
 }

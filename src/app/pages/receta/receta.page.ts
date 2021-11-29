@@ -32,6 +32,7 @@ export class RecetaPage implements OnInit {
   usuarioBD: any[] = []
   estadoFav: boolean = false;
   imagenUsuario : any;
+  favoritos : any;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private activeroute: ActivatedRoute, private servicioDB: BDService, public alertController: AlertController) {
     this.activeroute.queryParams.subscribe(params => {
@@ -67,14 +68,25 @@ export class RecetaPage implements OnInit {
         })
       }
     });
+    await this.servicioDB.traerFavoritos(this.idusuario, this.receta.id_receta)
+    await this.servicioDB.dbState().subscribe((res) => {
+      if (res) {
+        this.servicioDB.fetchFavoritos().subscribe(item => {
+          this.favoritos = item;
+        })
+      }
+    });
+    if (this.favoritos.length > 0) {
+      this.estadoFav = true;
+    }
   }
 
   favorito(){
     if (this.estadoFav) {
-      //this.servicioDB.cambiarFavoritos(false)
+      this.servicioDB.cambiarFavoritos(false, this.idusuario, this.receta.id_receta)
       this.estadoFav = false;
     } else {
-      //this.servicioDB.cambiarFavoritos(true)
+      this.servicioDB.cambiarFavoritos(true, this.idusuario, this.receta.id_receta)
       this.estadoFav = true;
     }
   }

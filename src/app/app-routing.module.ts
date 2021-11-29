@@ -53,6 +53,10 @@ const routes: Routes = [
   },  {
     path: 'camara',
     loadChildren: () => import('./pages/camara/camara.module').then( m => m.CamaraPageModule)
+  },
+  {
+    path: 'favorito',
+    loadChildren: () => import('./pages/favorito/favorito.module').then( m => m.FavoritoPageModule)
   }
 
 

@@ -72,8 +72,21 @@
   <ion-card style="--background:rgb(22, 22, 22);">
 
     <ion-card-header>
-      <img style="width:20%; border-radius:50%;" [src]="imagenUsuario">
-      <label>{{nombreUsuario}}</label>
+      <ion-row>
+
+     
+      <ion-col size="3">
+        <div>
+          <ion-avatar slot="start">
+            <img [src]="imagenUsuario">
+          </ion-avatar>
+        </div>
+      </ion-col>
+      <ion-col size="7">
+        <h2>{{nombreUsuario}}</h2>
+      </ion-col>
+    </ion-row>
+     
     </ion-card-header>
 
     <ion-card-content>
@@ -89,7 +102,11 @@
     <div>
       <ion-row>
         <ion-col size="2">
-          <img style="border-radius:40%; margin-left: 20px;" [src]="imagenUsuario">
+          <div>
+            <ion-avatar slot="start">
+              <img style="margin-left: 20px; margin-right: 5px;" [src]="items.imagen">
+            </ion-avatar>
+          </div>
         </ion-col>
         <ion-col style="margin-left: 20px;" size="6">
           <label style="font-size: 20px;"> {{items.nombre}} {{items.apellidos}} </label> <br>

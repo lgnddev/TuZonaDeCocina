@@ -9,6 +9,7 @@ import { Usuario } from './usuario';
 import { countReceta, FReceta, Home, Receta } from './receta'
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Valoracion } from './valoracion';
+import { Favorito, ListaFavorito} from './favorito';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,8 @@ export class BDService {
   home1 = new BehaviorSubject([]);
   valoracion = new BehaviorSubject([]);
   count = new BehaviorSubject([]);
+  favorito = new BehaviorSubject([]);
+  favoritoLista = new BehaviorSubject([]);
 
   CTipoUsuario: string = "CREATE TABLE IF NOT EXISTS TipoUsuario(id_tipo_usu INTEGER PRIMARY KEY, nom_tipo_usu Varchar(20) NOT NULL);";
   CTipoReceta: string = "CREATE TABLE IF NOT EXISTS TipoReceta(id_tipo INTEGER PRIMARY KEY, tipo Varchar(20) NOT NULL);";
@@ -113,44 +116,60 @@ export class BDService {
     }
   }
 
-  addUsuario(nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) {
-    let data = [nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu];
-    return this.database.executeSql('INSERT INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu) VALUES (?, ?, ?, ?, ?, ?)', data)
+  addUsuario(nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu, imagen) {
+    let data = [nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu, imagen];
+    return this.database.executeSql('INSERT INTO Usuario (nombre, apellidos, f_nacimiento, email, contrasena, id_tipo_usu, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)', data)
   }
 
   cambiarFavoritos(favorito, idUsuario, idReceta) {
     if (favorito) {
       let data = [idUsuario, idReceta];
       return this.database.executeSql('INSERT INTO favorito (id_usu, id_receta) VALUES (?, ?)', data).then(data2 => {
-        this.traerFavoritos(idUsuario);
+        this.traerFavoritos(idUsuario, idReceta);
       })
     } else {
       return this.database.executeSql('DELETE FROM favorito WHERE id_usu = ? AND id_receta = ?', [idUsuario, idReceta])
         .then(_ => {
-          this.traerFavoritos(idUsuario);
+          this.traerFavoritos(idUsuario, idReceta);
         });
     }
   }
 
-  traerFavoritos(idUsuario) {
-    return this.database.executeSql('', [idUsuario]).then(res => {
-      let items: Valoracion[] = [];
+  traerFavoritos(idUsuario, idReceta) {
+    return this.database.executeSql('SELECT id_receta FROM favorito WHERE id_usu = ? AND id_receta = ?', [idUsuario, idReceta]).then(res => {
+      let items: Favorito[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
           items.push({
-            id_valor: res.rows.item(i).id_valor,
-            comentario: res.rows.item(i).comentario,
-            fecha_valor: res.rows.item(i).fecha_valor,
-            id_usu: res.rows.item(i).id_usu,
             id_receta: res.rows.item(i).id_receta,
-            nombre: res.rows.item(i).nombre,
-            apellidos: res.rows.item(i).apellidos,
-            email: res.rows.item(i).email,
           });
         }
       }
-      this.valoracion.next(items);
+      this.favorito.next(items);
     });
+  }
+
+  traerFavoritosLista(idUsuario) {
+    return this.database.executeSql('SELECT a.id_receta, a.nom_receta FROM receta AS a INNER JOIN favorito AS b ON a.id_receta=b.id_receta AND b.id_usu = ?', [idUsuario]).then(res => {
+      let items: ListaFavorito[] = [];
+      if (res.rows.length > 0) {
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            id_receta: res.rows.item(i).id_receta,
+            nom_receta: res.rows.item(i).nom_receta,
+          });
+        }
+      }
+      this.favoritoLista.next(items);
+    });
+  }
+
+  fetchFavoritosLista(): Observable<ListaFavorito[]> {
+    return this.favoritoLista.asObservable();
+  }
+
+  fetchFavoritos(): Observable<Favorito[]> {
+    return this.favorito.asObservable();
   }
 
   /*validarUsu(email, contrasena) {
@@ -239,7 +258,7 @@ export class BDService {
   }
 
   listarComentarios(id) {
-    return this.database.executeSql('SELECT a.id_valor, a.comentario, a.fecha_valor, a.id_usu, a.id_receta, b.nombre, b.apellidos, b.email FROM valoracion AS a INNER JOIN usuario AS b ON a.id_usu = b.id_usu AND a.id_receta = ? ORDER BY a.fecha_valor DESC', [id]).then(res => {
+    return this.database.executeSql('SELECT a.id_valor, a.comentario, a.fecha_valor, a.id_usu, a.id_receta, b.nombre, b.apellidos, b.email, b.imagen FROM valoracion AS a INNER JOIN usuario AS b ON a.id_usu = b.id_usu AND a.id_receta = ? ORDER BY a.fecha_valor DESC', [id]).then(res => {
       let items: Valoracion[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
@@ -252,6 +271,7 @@ export class BDService {
             nombre: res.rows.item(i).nombre,
             apellidos: res.rows.item(i).apellidos,
             email: res.rows.item(i).email,
+            imagen: res.rows.item(i).imagen,
           });
         }
       }
