@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, Platform } from '@ionic/angular';
+import { ActionSheetController, AlertController, Platform } from '@ionic/angular';
 import { BDService } from 'src/app/servicios/bd.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
+
 
 @Component({
   selector: 'app-perfil',
@@ -27,8 +30,10 @@ export class PerfilPage implements OnInit {
   contadorRecetas: any;
   contadorComentarios: any;
   imagen: any;
+  imageSrc: any;
   
-  constructor(private platform: Platform, private servicioDB: BDService, public actionSheetController: ActionSheetController, private camera: Camera, private photoViewer: PhotoViewer) { }
+  constructor(private platform: Platform, private servicioDB: BDService, public actionSheetController: ActionSheetController, 
+              private camera: Camera, private photoViewer: PhotoViewer, private base64ToGallery: Base64ToGallery, public alertController: AlertController) { }
 
   async ngOnInit() {
     await this.servicioDB.dbState().subscribe((res) => {
@@ -84,23 +89,23 @@ export class PerfilPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Cambiar imagen de perfil',
       buttons: [{
-        text: 'Eliminar Foto',
-        role: 'destructive',
-        icon: 'trash',
-        handler: () => {
-          console.log('Delete clicked');
-        }
-      }, {
         text: 'Usar Camara',
         icon: 'share',
         handler: () => {
           this.camara();
         }
-      }, {
-        text: 'Galeria',
+      },{
+        text: 'Guardar foto en Galeria',
         icon: 'caret-forward-circle',
         handler: () => {
-          console.log('Play clicked');
+          this.savedGal();
+        }
+
+      },{
+        text: 'Abrir Galeria',
+        icon: 'book',
+        handler: () => {
+          this.openGallery();
         }
 
       }]
@@ -127,6 +132,71 @@ export class PerfilPage implements OnInit {
       await this.servicioDB.setImagen(this.imagen,this.usuario.id_usu, this.usuario.email, this.usuario.contrasena)
   }
 
+  savedGal(){
+    this.base64ToGallery.base64ToGallery(this.imagen.split(',')[1],{mediaScanner:true, prefix: '_img'}).then((value)=>{
+      this.presentAlert("Imagen Guardada");
+      this.imagen == "";
+    },(err)=>{
+        this.presentAlert("Error al guardar");
+    });
+  }
+
+  async presentAlert(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: mensaje,
+      buttons: ['Cancel']
+    });
+
+    await alert.present();
+  }
+
+  campass(contra1, contra2, contra3){
+    console.log(contra1, contra2, contra3, this.usuario.contrasena);
+    if(contra2 == contra3 && contra1== this.usuario.contrasena){
+      this.servicioDB.updatContrasena(this.usuario.email, contra3, this.usuario.id_usu)
+    }else{
+      this.presentAlert("Las Contraseñas no son Iguales")
+    }
+  }
+
+  async Alertpass() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      inputs: [
+        {
+          name: 'contra1',
+          type: 'password',
+          id:'p1',
+          placeholder: 'Contraseña Actual'
+        },
+        {
+          name: 'contra2',
+          type: 'password',
+          id: 'p2',
+          placeholder: 'Contraseña Nueva'
+        },
+        {
+          name: 'contra3',
+          type: 'password', 
+          id: 'p3',
+          placeholder: 'Repetir Nueva Contraseña',
+        }],
+      buttons:[
+        {
+          text:'Guardar',
+          handler:(alertData) =>{
+            this.campass(alertData.contra1, alertData.contra2, alertData.contra3)
+          }
+        },
+        {
+          text:'Cancelar'
+        }]
+    });
+    await alert.present()
+  }
+
+
   expandir(){ 
     this.platform.ready().then(()=>{
       var photoUrl = this.imagen;
@@ -135,5 +205,22 @@ export class PerfilPage implements OnInit {
     })
   }
 
+  openGallery() {
+    let cameraOptions = {
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 100,
+      targetWidth: 1000,
+      targetHeight: 1000,
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true
+    }
+
+    this.camera.getPicture(cameraOptions)
+      .then(file_uri => this.imageSrc = file_uri,
+      err => console.log(err));
+   }
+
+  
 
 }

@@ -54,7 +54,7 @@ ion-content{
   background:rgb(0, 0, 0);;
 }
 
-p{
+.p{
   margin:0 auto; 
   text-align: center; 
   width:85%;
@@ -70,4 +70,36 @@ p{
 .boton{
   --background: rgb(195, 144, 50);
 
+}
+
+.comen{
+  background-color:rgb(7, 7, 7); 
+  border:rgb(136, 126, 98) 4px solid;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.pres{
+  color: rgb(252, 247, 247); 
+  font-size: 20px;
+}
+
+.fech{
+  color: rgb(252, 247, 247); 
+  font-size: 15px;
+}
+
+.eli{
+  --background: rgba(202, 9, 9, 0.507); 
+  height: 35px; 
+  padding-top: 5px;
+
+}
+
+.p2{
+  color: rgb(252, 247, 247); 
+  font-size: 18px; 
+  word-wrap: break-word; 
+  white-space: normal; 
+  text-align: justify;
 }

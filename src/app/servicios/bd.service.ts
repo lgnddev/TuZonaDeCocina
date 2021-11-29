@@ -420,6 +420,13 @@ export class BDService {
     })
   }
 
+  updatContrasena(email,contrasena, id_usu) {
+    let data = [contrasena, id_usu];
+    return this.database.executeSql('UPDATE usuario SET contrasena = ? WHERE id_usu = ?', data).then(data2 => {
+      this.login(email, contrasena);
+    })
+  }
+
   updateReceta(nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_receta, id_usu) {
     let data = [nom_receta, tiempo, ingredientes, preparacion, descripcion, id_difi, id_tipo, id_receta];
     return this.database.executeSql('UPDATE receta SET nom_receta = ?, tiempo = ?, ingredientes = ?, preparacion = ?, descripcion = ?, id_difi = ?, id_tipo = ? WHERE id_receta = ?', data)
