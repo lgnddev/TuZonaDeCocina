@@ -74,6 +74,7 @@ export class InscripcionPage implements OnInit {
       this.presentToast("Complete el formulario")
     }
   }
+  
 
   async presentToast(message: string, duration?: number) {
     const toast = await this.toastController.create(

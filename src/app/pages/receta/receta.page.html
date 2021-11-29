@@ -29,7 +29,7 @@
   <center>
     <div class="container descrip">
       <h2>Descripción</h2>
-      <p>{{receta.descripcion}}</p>
+      <p class="p">{{receta.descripcion}}</p>
       <ion-row style="margin-top: 20px;">
         <ion-col size=6>
           <p class="car">{{receta.id_difi}}</p>
@@ -99,7 +99,7 @@
   </ion-card>
 
   <div *ngFor="let items of comentariosBD">
-    <div>
+    <div class="comen">
       <ion-row>
         <ion-col size="2">
           <div>
@@ -109,20 +109,22 @@
           </div>
         </ion-col>
         <ion-col style="margin-left: 20px;" size="6">
-          <label style="font-size: 20px;"> {{items.nombre}} {{items.apellidos}} </label> <br>
-          <label style="color: rgb(19, 19, 19); font-size: 15px;"> {{items.fecha_valor | date:"dd/MM/yyyy, h:mm a" }}
+          <label class="pres"> {{items.nombre}} {{items.apellidos}} </label> <br>
+          <label class="fech"> {{items.fecha_valor | date:"dd/MM/yyyy, h:mm a" }}
           </label>
         </ion-col>
-        <ion-col *ngIf="items.id_usu == idusuario">
-          <ion-button style="--background: rgba(104, 0, 0, 0.349); height: 35px; padding-top: 5px;"
-            (click)="alertCtrlEliminar(items.id_valor)">
+        <ion-col size="2" *ngIf="items.id_usu == idusuario">
+          <ion-button class="eli" (click)="alertCtrlEliminar(items.id_valor)">
             <ion-icon name="close-outline"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
       <ion-row style="margin-left: 0px; margin-right: 0px;">
-        <p style="font-size: 18px; word-wrap: break-word; white-space: normal; text-align: justify;">
-          {{items.comentario}}</p>
+        <div class="container">
+          <p class="p2">
+            {{items.comentario}}</p>
+        </div>
+
       </ion-row>
     </div>
   </div>

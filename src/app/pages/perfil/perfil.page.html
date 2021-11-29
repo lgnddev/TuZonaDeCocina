@@ -67,8 +67,8 @@
     <ion-input style="margin-left: 84px;" value="{{usuario.email}}" [(ngModel)]="usuario.email"> </ion-input>
   </ion-item>
 
-  <ion-item>
-    <ion-label>Contraseña</ion-label>
-    <ion-label class="input" style="font-size: 18px;">Cambiar contraseña</ion-label>
-  </ion-item>
+  <div style="text-align: center;">
+    <ion-button class="pass" (click)="Alertpass()">Cambiar contraseña</ion-button>
+  </div>
+  
 </ion-content>
