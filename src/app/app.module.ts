@@ -27,10 +27,6 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
-<<<<<<< HEAD
-=======
-
->>>>>>> a1f10ddbbdba6ec9d317c68c20f0cdaf9fb84f01
 
 @NgModule({
   declarations: [AppComponent],

@@ -30,7 +30,6 @@ export class PerfilPage implements OnInit {
   contadorRecetas: any;
   contadorComentarios: any;
   imagen: any;
-  imageSrc: any;
   
   constructor(private platform: Platform, private servicioDB: BDService, public actionSheetController: ActionSheetController, 
               private camera: Camera, private photoViewer: PhotoViewer, private base64ToGallery: Base64ToGallery, public alertController: AlertController) { }
@@ -205,21 +204,21 @@ export class PerfilPage implements OnInit {
     })
   }
 
-  openGallery() {
+  async openGallery() {
     let cameraOptions = {
+      quality: 50,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      quality: 100,
-      targetWidth: 1000,
-      targetHeight: 1000,
-      encodingType: this.camera.EncodingType.JPEG,
-      correctOrientation: true
+      destinationType: this.camera.DestinationType.DATA_URL,
+      allowEdit: true
     }
 
-    this.camera.getPicture(cameraOptions)
-      .then(file_uri => this.imageSrc = file_uri,
-      err => console.log(err));
-   }
+    await this.camera.getPicture(cameraOptions).then((imgData) => {
+      this.imagen = 'data:image/jpeg;base64,' + imgData;
+    }, (err) => {
+      console.log(err);
+    })
+    await this.servicioDB.setImagen(this.imagen,this.usuario.id_usu, this.usuario.email, this.usuario.contrasena)
+  }
 
   
 

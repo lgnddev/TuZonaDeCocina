@@ -17,6 +17,7 @@ export class InscripcionPage implements OnInit {
 
   imageSrc: any;
 
+
   coincideContrasena: any = 1;
   nuevoUsuario: any = {
     nombre: "",
@@ -74,7 +75,7 @@ export class InscripcionPage implements OnInit {
       this.presentToast("Complete el formulario")
     }
   }
-  
+
 
   async presentToast(message: string, duration?: number) {
     const toast = await this.toastController.create(
@@ -90,20 +91,18 @@ export class InscripcionPage implements OnInit {
 
   async openGallery() {
     let cameraOptions = {
+      quality: 50,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      quality: 100,
-      targetWidth: 1000,
-      targetHeight: 1000,
-      encodingType: this.camera.EncodingType.JPEG,
-      correctOrientation: true
+      destinationType: this.camera.DestinationType.DATA_URL,
+      allowEdit: true
     }
 
-    await this.camera.getPicture(cameraOptions).then((imageData) => {
-      this.imageSrc = 'data:image/jpeg;base64,' + imageData;
+    await this.camera.getPicture(cameraOptions).then((imgData) => {
+      this.imageSrc = 'data:image/jpeg;base64,' + imgData;
     }, (err) => {
-      console.log(err)
-    });
+      console.log(err);
+    })
+    await console.log(this.imageSrc)
   }
 
   async btnImagen() {
